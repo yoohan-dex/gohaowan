@@ -1,0 +1,19 @@
+.wscnph {
+  width: 100%;
+}
+
+.richtext * {
+  color: #333333;
+
+}
+
+.richtext p,
+.richtext h1,
+.richtext h2,
+.richtext h3,
+.richtext h4,
+.richtext h5,
+.richtext h6 {
+  color: #333333;
+  font-weight: normal;
+}
