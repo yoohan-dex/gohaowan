@@ -1,4 +1,9 @@
 <template>
+  <div class="wrap">
+  <div class="like" @click="handleLike">
+    <img src="../assets/liked.svg" alt="">
+    <p>{{item.upvote_count}}</p>
+  </div>
   <router-link :to="{ name: 'Activity-detail', params: { id: item.id }}" class="container">
     <div class="background" :style="{height: height + 'px'}">
       <!-- <img :src="item.cover_image" class="background-image" :style="{width: '100%'}"> -->
@@ -7,12 +12,11 @@
     <div class="foreground">
       <div class="top">
         <div class="indicator">
-          {{item.status === 0 ? '进行中' : ''}}
+          {{status}}
         </div>
-        <div class="right">
-          {{item.like}}
-        </div>
+        
       </div>
+      
       <div class="bottom">
           <div class="title">{{item.title}}</div>
         <div class="other">
@@ -27,8 +31,23 @@
       </div>
     </div>
   </router-link>
+  </div>
 </template>
 <script>
+const getStatus = status => {
+  // 0未开始 1进行中 2已结束 3活动取消
+  switch (status) {
+    case 0:
+    default:
+      return '未开始';
+    case 1:
+      return '进行中';
+    case 2:
+      return '已结束';
+    case 3:
+      return '活动取消';
+  }
+};
 export default {
   name: 'activity',
   props: {
@@ -48,19 +67,54 @@ export default {
     const rate = window.innerWidth / 16;
     this.height = rate * 9;
   },
+  computed: {
+    status() {
+      return getStatus(this.item.status);
+    },
+  },
   data() {
     return {
       height: '',
-      msg: 'Welcome to Your Vue.js App',
     };
+  },
+  methods: {
+    handleLike() {},
   },
 };
 </script>
 <style lang="scss" scoped>
+.wrap {
+  position: relative;
+  width: 100%;
+
+  .like {
+    z-index: 1;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    width: 60px;
+    font-size: 12px;
+    padding: 4px 10px;
+    background: #ff5d57;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    img {
+      width: 15px;
+      height: auto;
+    }
+    p {
+      color: white;
+      margin: 0;
+    }
+  }
+}
 .container {
   display: block;
   position: relative;
   width: 100%;
+  color: white;
 }
 .background {
   width: 100%;
@@ -69,9 +123,12 @@ export default {
   .background-image {
     width: 100%;
     background-size: contain;
-    background-image: linear-gradient(to right, rgba(253, 218, 6, .5), rgba(0, 0, 0, 0));
+    background-image: linear-gradient(
+      to right,
+      rgba(253, 218, 6, 0.5),
+      rgba(0, 0, 0, 0)
+    );
     background-blend-mode: saturation;
-    
   }
 }
 .foreground {
@@ -81,6 +138,7 @@ export default {
   top: 0;
   left: 0;
 }
+
 .top {
   display: flex;
   justify-content: space-between;
@@ -91,10 +149,6 @@ export default {
     background: #ff5d57;
     padding: 4px 10px;
     border-radius: 30px;
-  }
-  .right {
-    font-size: 15px;
-    font-weight: bold;
   }
 }
 .bottom {

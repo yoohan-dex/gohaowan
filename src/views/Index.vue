@@ -19,7 +19,7 @@
     </div>
     <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
     <li v-for="(item, i) in list" :key="i">
-      <activity :item="item" :handleClick="handleClick" v-on:click="handleClick">
+      <activity :item="item">
         </activity>
     </li>
   </ul>
@@ -60,9 +60,17 @@ export default {
     ...mapState({
       list: state =>
         state.activity.list.filter(v => v.id !== 1 && v.id !== 18144330753225),
+      scroll: state => state.activity.scroll,
     }),
   },
-
+  // mounted() {
+  //   setTimeout(() => window.scroll(0, this.scroll), 200);
+  // },
+  // beforeDestroy() {
+  //   const scroll = window.scrollY;
+  //   this.$store.commit('setScroll', scroll);
+  //   console.log(scroll);
+  // },
   methods: {
     handleNavSelected(id) {
       this.selected = id;
@@ -94,7 +102,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
   .item {
     display: flex;
     justify-content: center;

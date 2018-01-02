@@ -2,13 +2,15 @@
   <div class="container">
     <detail-title :item="item"></detail-title>
     <detail-content :data="item"></detail-content>
+    <comment></comment>
+    <div class="space"></div>
     <div class="bottom-btn">
       <div class="price">
         {{item.join_fee}}/人
       </div>
-      <div class="apply">
+      <router-link :to="{name: 'Activity-action'}" class="apply">
         立即报名
-      </div>
+      </router-link>
     </div>  
   </div>
 </template>
@@ -16,6 +18,7 @@
 import { mapState } from 'vuex';
 import DetailTitle from '../components/DetailTitle';
 import DetailContent from '../components/DetailContent';
+import Comment from '../components/Comment';
 
 export default {
   name: 'activity-detail',
@@ -28,7 +31,7 @@ export default {
     const id = this.$route.params.id;
     this.$store.dispatch('getDetail', { id });
   },
-  components: { DetailTitle, DetailContent },
+  components: { DetailTitle, DetailContent, Comment },
 };
 </script>
 <style lang="scss" scoped>
@@ -45,6 +48,8 @@ export default {
   background: #fdda06;
   padding: 5px 0;
   > * {
+    color: black;
+    text-decoration: none;
     display: flex;
     width: 50%;
     height: 100%;
@@ -55,6 +60,10 @@ export default {
     border-right: 1px solid #bda306;
     margin-left: 0.5px;
   }
+}
+.space {
+  width: 100%;
+  height: 50px;
 }
 </style>
 

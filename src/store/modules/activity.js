@@ -8,9 +8,13 @@ const activityModule = {
     list: [],
     activeId: '',
     active: {},
+    scroll: 0,
   },
   getters: {},
   mutations: {
+    setScroll(state, num) {
+      state.scroll = num;
+    },
     pageIncrement(state, list) {
       state.page += 1;
       state.list.push(...list);
@@ -24,6 +28,9 @@ const activityModule = {
     setActiveId(state, id) {
       state.activeId = id;
     },
+    setForm(state, form) {
+      state.active.join_form = form;
+    },
   },
   actions: {
     async getList({ commit, state }) {
@@ -35,10 +42,11 @@ const activityModule = {
       const res = await api.getActivityDetail(id);
       const item = res.data;
       item.images = item.images.split(',');
-      console.log(moment(item.start_time).format('YYYY-MM-DD'));
-      item.start_time = moment(item.start_time).format('YYYY-MM-DD');
-      item.end_time = moment(item.end_time).format('YYYY-MM-DD');
-      item.end_join_time = moment(item.end_join_time).format('YYYY-MM-DD');
+      item.start_time = moment(item.start_time * 1000).format('YYYY-MM-DD');
+      item.end_time = moment(item.end_time * 1000).format('YYYY-MM-DD');
+      item.end_join_time = moment(item.end_join_time * 1000).format(
+        'YYYY-MM-DD',
+      );
       item.join_form = JSON.parse(item.join_form);
       commit('setActive', item);
     },

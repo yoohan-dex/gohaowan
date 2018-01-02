@@ -17,27 +17,50 @@
       <div class="top" v-show="!playing">
         <div class="like">
           <img src="../assets/liked.svg" alt="">
-          <p>0</p>
+          <p>{{item.upvote_count}}</p>
         </div>
       </div>
-      <div class="type" v-show="!playing">
-        <div :class="{active: showType === 0}" @click="showType = 0">视频</div>
-        <div :class="{active: showType === 1}" @click="showType = 1">图片</div>
+      <div class="type" v-show="!playing" v-if="item.video_url">
+        <div :class="{active: showType === 0}" @click="handleTypeChange(0)">视频</div>
+        <div :class="{active: showType === 1}" @click="handleTypeChange(1)">图片</div>
       </div>
-      <div class="play-controller" v-show="showPlay && showType === 0">
+      <div class="play-controller" v-show="showPlay && showType === 0" v-if="item.video_url">
         <img v-show="!playing" src="../assets/play.svg" @click="handlePlay">
         <img v-show="playing" src="../assets/stop.svg" @click="handlePlay">
       </div>
     </div>
     <div class="text-box">
       <h2>{{item.title}}</h2>
-      <p class="location">{{item.address}} </p>
-      <p class="time">{{item.start_time}}至{{item.end_time}} </p>
-      <p class="phone">80800808</p>
+      <p class="location">
+        <img src="../assets/location2.svg" alt="">
+        {{item.address}} </p>
+      <p class="time">
+        <img src="../assets/time.svg" alt="">
+        {{item.start_time}}至{{item.end_time}} </p>
+      <div class="text-item">
+        <p class="phone">
+          <img src="../assets/phone.svg" alt="">
+          80800808</p>
+        <p class="status">{{status}}</p>
+      </div>
     </div>
   </div>
 </template>
 <script>
+const getStatus = status => {
+  // 0未开始 1进行中 2已结束 3活动取消
+  switch (status) {
+    case 0:
+    default:
+      return '未开始';
+    case 1:
+      return '进行中';
+    case 2:
+      return '已结束';
+    case 3:
+      return '活动取消';
+  }
+};
 export default {
   name: 'detail-title',
   props: {
@@ -51,14 +74,25 @@ export default {
       playing: false,
       haveNotPlay: true,
       showPlay: true,
-      showType: 0,
+      showType: this.item.video_url ? 0 : 1,
     };
+  },
+  computed: {
+    status() {
+      return getStatus(this.item.status);
+    },
   },
   mounted() {
     const rate = window.innerWidth / 16;
     this.height = rate * 9;
   },
   methods: {
+    handleTypeChange(i) {
+      this.showType = i;
+      if (i === 1 && this.playing) {
+        this.$refs.video.pause();
+      }
+    },
     handlePlay() {
       if (this.playing) {
         this.$refs.video.pause();
@@ -193,6 +227,22 @@ export default {
   }
   .text-box {
     padding: 7px 15px 20px;
+    img {
+      width: 12px;
+      margin-bottom: 3px;
+    }
+    .text-item {
+      display: flex;
+      justify-content: space-between;
+
+      .status {
+        font-size: 12px;
+        padding: 2px 4px;
+        color: #ff5d57;
+        border: 2px solid #ff5d57;
+        border-radius: 6px;
+      }
+    }
   }
   h2 {
     font-size: 18px;
