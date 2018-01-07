@@ -28,7 +28,7 @@
     </div>
     <div class="tab-container" v-else>
 
-      <div class="information-container">
+      <div class="information-container" @click="toInfoDetail">
         <div class="top" :style="{height}">
           <img :src="top.cover_image" alt="">
           <div class="text">
@@ -114,6 +114,9 @@ export default {
     },
     infoLoadMore() {
       this.$store.dispatch('getInformationList');
+    },
+    toInfoDetail() {
+      this.$router.push({ name: 'Information-detail', params: { id: top.id } });
     },
     loadMore() {
       this.$store.dispatch('getList');

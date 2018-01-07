@@ -31,7 +31,9 @@ const informationModule = {
         ...v,
         add_time: moment(v.add_time * 1000).format('YYYY-MM-DD HH:MM'),
       }));
-      commit('setTop', list[0]);
+      if (state.page === 1) {
+        commit('setTop', list[0]);
+      }
       commit('infoPageIncrement', list.slice(1));
     },
     async getInformationDetail({ commit }, { id }) {

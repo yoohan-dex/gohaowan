@@ -1,7 +1,7 @@
 <template>
   <div class="container">
 
-    <div class="member-list">
+    <div class="member-list" v-if="member">
       <div class="left">
         已报名 11/30
       </div>
@@ -28,6 +28,10 @@ export default {
   props: {
     data: {
       type: Object,
+    },
+    member: {
+      type: Boolean,
+      default: true,
     },
   },
 };

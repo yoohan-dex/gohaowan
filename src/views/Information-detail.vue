@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <!-- <detail-title :item="item"></detail-title>
-    <detail-content :data="item"></detail-content> -->
+    <!-- <detail-title :item="item"></detail-title> -->
+    <detail-content :data="item" :member="false"></detail-content>
     <comment></comment>
     <div class="space"></div>
     <!-- <div class="bottom-btn">
