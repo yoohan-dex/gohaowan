@@ -8,7 +8,10 @@
           </mt-swipe-item>
         </mt-swipe>
         <div class="video-box" @click="handleClick" v-show="showType === 0">
-          <video ref="video" :src="item.video_url" :style="{width: '100%', height: height + 'px'}" ></video>
+          <video id="video" ref="video" :style="{width: '100%', height: height + 'px'}" preload="auto" >
+            <source type="video/mp4" :src="item.video_url">
+            你的浏览器不支持视频播放
+          </video>
         </div>
       </div>
       <div class="cover-image" v-show="haveNotPlay && showType === 0">

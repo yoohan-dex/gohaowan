@@ -18,7 +18,26 @@ const getActivityDetail = id =>
       id,
     },
   });
+
+const getSearchHistory = () =>
+  request({
+    url: '/app/search/search-history',
+    method: 'get',
+  });
+
+const search = (text, page) =>
+  request({
+    url: '/app/search/search',
+    method: 'get',
+    params: {
+      keyword: text,
+      page,
+    },
+  });
+
 export default {
   getActivityDetail,
   getActivityList,
+  getSearchHistory,
+  search,
 };

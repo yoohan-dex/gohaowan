@@ -9,26 +9,47 @@
     </div>
   </div>
   
-<mt-tab-container v-model="selected">
-  <mt-tab-container-item :id="0">
-    <div class="search-bar">
-      <div class="search-area">
-        <img class="icon" src="../assets/search.svg" alt="">
-        <p>去哪玩/玩什么</p>
+  <div class="tab">
+    <div class="tab-container" v-if="selected === 0" :style="{display: selected === 0 ? 'block' : 'none'}">
+
+      <div class="search-bar">
+        <div class="search-area" @click="handleSearch">
+          <img class="icon" src="../assets/search.svg" alt="">
+          <p>去哪玩/玩什么</p>
+        </div>
       </div>
+      <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+        <li v-for="(item, i) in list" :key="i">
+          <activity :item="item">
+            </activity>
+        </li>
+      </ul>
+
     </div>
-    <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-    <li v-for="(item, i) in list" :key="i">
-      <activity :item="item">
-        </activity>
-    </li>
-  </ul>
-  </mt-tab-container-item>
-  <mt-tab-container-item :id="1">
-  </mt-tab-container-item>
-  <mt-tab-container-item id="3">
-  </mt-tab-container-item>
-</mt-tab-container>
+    <div class="tab-container" v-else>
+
+      <div class="information-container">
+        <div class="top" :style="{height}">
+          <img :src="top.cover_image" alt="">
+          <div class="text">
+            <div class="title">{{top.title}}</div>
+            <div class="sub-title">{{top.sub}}</div>
+          </div>
+        </div>
+      </div>  
+
+      <ul v-infinite-scroll="infoLoadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+        <li v-for="(item, i) in infoList" :key="i">
+          <information :item="item">
+            </information>
+        </li>
+      </ul>
+
+  </div>  
+
+    </div>
+    
+  </div>
 </div>
 
   
@@ -37,6 +58,7 @@
 <script>
 import { mapState } from 'vuex';
 import Activity from '../components/Activity';
+import Information from '../components/Information';
 import './index.scss';
 
 // const item = {
@@ -48,20 +70,30 @@ import './index.scss';
 // };
 export default {
   name: 'HelloWorld',
-  components: { Activity },
+  components: { Activity, Information },
   data() {
     return {
       loading: false,
-      msg: 'Welcome to Your Vue.js App',
       selected: 0,
+      height: 0,
     };
+  },
+  created() {
+    const width = window.innerWidth;
+    const rate = 9 / 16;
+    this.height = width * rate;
   },
   computed: {
     ...mapState({
       list: state =>
         state.activity.list.filter(v => v.id !== 1 && v.id !== 18144330753225),
       scroll: state => state.activity.scroll,
+      infoList: state => state.information.list,
+      top: state => state.information.top,
     }),
+  },
+  mounted() {
+    this.infoLoadMore();
   },
   // mounted() {
   //   setTimeout(() => window.scroll(0, this.scroll), 200);
@@ -74,6 +106,14 @@ export default {
   methods: {
     handleNavSelected(id) {
       this.selected = id;
+    },
+    handleSearch() {
+      this.$router.push({
+        name: 'Search-view',
+      });
+    },
+    infoLoadMore() {
+      this.$store.dispatch('getInformationList');
     },
     loadMore() {
       this.$store.dispatch('getList');
@@ -147,8 +187,54 @@ export default {
   }
 }
 
-.mint-tab-container {
-  margin-top: 44px;
+.tab {
+  width: 100%;
+  height: 100%;
+
+  .tab-container {
+    display: block;
+    width: 100%;
+    min-height: 800px;
+    padding-top: 44px;
+    background: #f2f2f2;
+  }
+}
+
+.information-container {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 20px;
+  .top {
+    position: relative;
+    width: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    .text {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      color: #ffffff;
+      padding: 15px;
+      .title,
+      .sub-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: box;
+        display: -webkit-box;
+        line-clamp: 1;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+      }
+      .title {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .sub-title {
+      }
+    }
+  }
 }
 
 h1,

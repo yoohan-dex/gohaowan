@@ -9,6 +9,10 @@ const activityModule = {
     activeId: '',
     active: {},
     scroll: 0,
+    searchPage: 2,
+    searchList: [],
+    keyword: '',
+    activeKeyword: '',
   },
   getters: {},
   mutations: {
@@ -18,6 +22,14 @@ const activityModule = {
     pageIncrement(state, list) {
       state.page += 1;
       state.list.push(...list);
+    },
+    searchPageIncrement(state, list) {
+      state.searchPage += 1;
+      state.searchList.push(...list);
+    },
+    searchGet(state, list) {
+      state.searchList = list;
+      state.searchPage = 2;
     },
     selectActivity(state, activity) {
       state.activeActivity = activity;
@@ -31,11 +43,25 @@ const activityModule = {
     setForm(state, form) {
       state.active.join_form = form;
     },
+    setKeyword(state, keyword) {
+      state.keyword = keyword;
+    },
+    setActiveKeyword(state, keyword) {
+      state.activeKeyword = keyword;
+    },
   },
   actions: {
     async getList({ commit, state }) {
       const res = await api.getActivityList(state.page, state.pageSize);
       commit('pageIncrement', res.data);
+    },
+    async getSearchNextList({ commit, state }) {
+      const res = await api.search(state.activeKeyword, state.searchPage);
+      commit('searchPageIncrement', res.data);
+    },
+    async getSearchList({ commit, state }) {
+      const res = await api.search(state.keyword, 1);
+      commit('searchGet', res.data);
     },
     async getDetail({ commit }, { id }) {
       commit('setActiveId', id);

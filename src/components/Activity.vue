@@ -5,7 +5,7 @@
     <p>{{item.upvote_count}}</p>
   </div>
   <router-link :to="{ name: 'Activity-detail', params: { id: item.id }}" class="container">
-    <div class="background" :style="{height: height + 'px'}">
+    <div class="background" :style="{height: height + 'px'}" >
       <!-- <img :src="item.cover_image" class="background-image" :style="{width: '100%'}"> -->
       <div class="background-image" :style="{ height: height + 'px', backgroundImage: `url(${item.cover_image}), linear-gradient(to right, rgba(253, 218, 6, .5), rgba(0, 0, 0, 0))`}"  alt=""></div>
     </div>
