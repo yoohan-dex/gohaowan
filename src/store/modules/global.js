@@ -14,10 +14,7 @@ const globalModule = {
     async getUserInfo() {
       const res = await api.getInfo();
       if (res.code === 10030) {
-        // setTimeout(
-        // () => location.assign('http://ghw.work2pix.top/app/login/wx-code'),
-        // 10000,
-        // );
+        location.assign('http://ghw.work2pix.top/app/login/wx-code');
       } else {
       }
     },

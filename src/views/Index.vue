@@ -95,7 +95,6 @@ export default {
   },
   mounted() {
     this.infoLoadMore();
-    this.$store.dispatch('getUserInfo');
   },
   // mounted() {
   //   setTimeout(() => window.scroll(0, this.scroll), 200);
@@ -110,9 +109,11 @@ export default {
       this.$store.commit('setNav', id);
     },
     handleSearch() {
-      this.$router.push({
-        name: 'Search-view',
-      });
+      this.$store.dispatch('getUserInfo');
+
+      // this.$router.push({
+      //   name: 'Search-view',
+      // });
     },
     infoLoadMore() {
       this.$store.dispatch('getInformationList');
