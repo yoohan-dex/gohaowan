@@ -2,10 +2,8 @@ import axios from 'axios';
 import { MessageBox } from 'mint-ui';
 import store from '@/store';
 
-const BASE_API = 'http://112.74.25.233:8004';
-
 const service = axios.create({
-  baseURL: BASE_API, // process.env.BASE_API, // api的base_url
+  baseURL: process.env.BASE_API, // process.env.BASE_API, // api的base_url
   timeout: 5000, // 请求超时时间
   headers: { 'content-type': 'application/json', isAjax: '1' },
   withCredentials: true,
