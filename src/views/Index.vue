@@ -1,16 +1,16 @@
 <template>
 <div>
   <div class="nav-bar">
-    <div :class="[{ active: selected === 0 }, 'item']" @click="handleNavSelected(0)">
+    <div :class="[{ active: nav === 0 }, 'item']" @click="handleNavSelected(0)">
       <p>活动</p>
     </div>
-    <div :class="[{ active: selected === 1 }, 'item']" @click="handleNavSelected(1)">
+    <div :class="[{ active: nav === 1 }, 'item']" @click="handleNavSelected(1)">
       <p>发现</p>
     </div>
   </div>
   
   <div class="tab">
-    <div class="tab-container" v-if="selected === 0" :style="{display: selected === 0 ? 'block' : 'none'}">
+    <div class="tab-container" v-if="nav === 0" :style="{display: nav === 0 ? 'block' : 'none'}">
 
       <div class="search-bar">
         <div class="search-area" @click="handleSearch">
@@ -59,6 +59,7 @@
 import { mapState } from 'vuex';
 import Activity from '../components/Activity';
 import Information from '../components/Information';
+
 import './index.scss';
 
 // const item = {
@@ -74,7 +75,6 @@ export default {
   data() {
     return {
       loading: false,
-      selected: 0,
       height: 0,
     };
   },
@@ -90,10 +90,12 @@ export default {
       scroll: state => state.activity.scroll,
       infoList: state => state.information.list,
       top: state => state.information.top,
+      nav: state => state.global.nav,
     }),
   },
   mounted() {
     this.infoLoadMore();
+    this.$store.dispatch('getUserInfo');
   },
   // mounted() {
   //   setTimeout(() => window.scroll(0, this.scroll), 200);
@@ -105,7 +107,7 @@ export default {
   // },
   methods: {
     handleNavSelected(id) {
-      this.selected = id;
+      this.$store.commit('setNav', id);
     },
     handleSearch() {
       this.$router.push({
@@ -116,7 +118,10 @@ export default {
       this.$store.dispatch('getInformationList');
     },
     toInfoDetail() {
-      this.$router.push({ name: 'Information-detail', params: { id: top.id } });
+      this.$router.push({
+        name: 'Information-detail',
+        params: { id: this.top.id },
+      });
     },
     loadMore() {
       this.$store.dispatch('getList');
@@ -197,7 +202,7 @@ export default {
   .tab-container {
     display: block;
     width: 100%;
-    min-height: 800px;
+    min-height: 600px;
     padding-top: 44px;
     background: #f2f2f2;
   }

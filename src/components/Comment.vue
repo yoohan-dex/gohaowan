@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="inner-container">
     <div class="top">
       <p class="title">玩家评论</p>
       <p>
@@ -43,7 +43,7 @@ export default {
 p {
   margin: 0;
 }
-.container {
+.inner-container {
   width: 100%;
   margin-top: 8px;
   background: white;

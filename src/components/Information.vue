@@ -41,7 +41,7 @@ export default {
     background-size: cover;
   }
   .text {
-    padding-left: 5px;
+    padding-left: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -64,8 +64,9 @@ export default {
     justify-content: space-between;
 
     img {
-      width: 15px;
-      height: 15px;
+      width: 13px;
+      height: 13px;
+      margin-top: 1px;
     }
   }
   .time {

@@ -12,27 +12,27 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/activities',
+      path: '/',
       name: 'Index',
       component: Index,
     },
     {
-      path: '/activities/activity-detail/:id',
+      path: '/activity-detail/:id',
       name: 'Activity-detail',
       component: ActivityDetail,
     },
     {
-      path: '/activities/activity-detail/:id/action',
+      path: '/activity-detail/:id/action',
       name: 'Activity-action',
       component: DyForm,
     },
     {
-      path: '/activities/confirm',
+      path: '/confirm',
       name: 'Confirm-item',
       component: ConfirmItem,
     },
     {
-      path: '/activities/search',
+      path: '/search',
       name: 'Search-view',
       component: SearchView,
     },

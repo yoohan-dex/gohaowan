@@ -1,9 +1,15 @@
 <template>
   <div class="container">
     <!-- <detail-title :item="item"></detail-title> -->
+    <div class="title-container">
+      <img :src="item.cover_image" alt="">
+      <div class="text">
+        <p>{{item.title}}</p>
+        <p class="time">{{item.add_time}}</p>
+      </div>
+    </div>
     <detail-content :data="item" :member="false"></detail-content>
     <comment></comment>
-    <div class="space"></div>
     <!-- <div class="bottom-btn">
       <div class="price">
         {{item.join_fee}}/人
@@ -24,12 +30,12 @@ export default {
   name: 'activity-detail',
   computed: {
     ...mapState({
-      item: state => state.activity.active,
+      item: state => state.information.active,
     }),
   },
   created() {
     const id = this.$route.params.id;
-    this.$store.dispatch('getDetail', { id });
+    this.$store.dispatch('getInformationDetail', { id });
   },
   components: { DetailTitle, DetailContent, Comment },
 };
@@ -59,6 +65,32 @@ export default {
   .price {
     border-right: 1px solid #bda306;
     margin-left: 0.5px;
+  }
+}
+
+.title-container {
+  background: white;
+  margin-bottom: 10px;
+  width: 100%;
+  img {
+    width: 100%;
+  }
+  .text {
+    width: 100%;
+    padding: 10px 15px;
+
+    p {
+      margin: 0;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+    .time {
+      font-weight: initial;
+      font-size: 13px;
+      color: #666;
+      text-align: right;
+    }
   }
 }
 .space {

@@ -7,7 +7,7 @@ const BASE_API = 'http://112.74.25.233:8004';
 const service = axios.create({
   baseURL: BASE_API, // process.env.BASE_API, // api的base_url
   timeout: 5000, // 请求超时时间
-  headers: { 'content-type': 'application/json' },
+  headers: { 'content-type': 'application/json', isAjax: '1' },
 });
 
 service.interceptors.request.use(
@@ -30,6 +30,9 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (response) => {
+    if (response.data.code === 10030) {
+      return response.data;
+    }
     if (response.data.code !== 0) {
       MessageBox.alert(response.error, '请求异常');
     }

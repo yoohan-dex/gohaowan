@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="inner-container">
 
     <div class="member-list" v-if="member">
       <div class="left">
@@ -37,7 +37,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.container {
+.inner-container {
   background: white;
 }
 .member-list {

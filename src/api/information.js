@@ -22,4 +22,5 @@ function getDetail(id) {
 
 export default {
   get,
+  getDetail,
 };
