@@ -35,7 +35,7 @@ service.interceptors.response.use(
       return response.data;
     }
     if (response.data.code !== 0) {
-      MessageBox.alert(response.error, '请求异常');
+      MessageBox.alert(response.data.message, '请求异常');
     }
     return response.data;
   },
