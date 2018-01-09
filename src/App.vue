@@ -7,12 +7,28 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'app',
   data() {
     return {
       transitionName: 'slide-left',
     };
+  },
+  mounted() {
+    this.login();
+  },
+  computed: {
+    ...mapState({
+      phone: state => state.global.phone,
+    }),
+  },
+  methods: {
+    async login() {
+      await this.$store.dispatch('getUserInfo');
+      if (!this.phone) this.$router.replace({ name: 'Bind-phone' });
+    },
   },
   watch: {
     $route(to, from) {

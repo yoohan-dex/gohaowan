@@ -95,7 +95,6 @@ export default {
   },
   mounted() {
     this.infoLoadMore();
-    this.$store.dispatch('getUserInfo');
   },
   // mounted() {
   //   setTimeout(() => window.scroll(0, this.scroll), 200);

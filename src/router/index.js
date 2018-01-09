@@ -6,6 +6,9 @@ import InformationDetail from '@/views/Information-detail';
 import DyForm from '@/views/DyForm';
 import ConfirmItem from '@/views/ConfirmItem';
 import SearchView from '@/views/Search-view';
+import BindPhone from '@/views/bindPhone';
+import UserInformation from '@/views/User-information';
+import UserLabel from '@/views/User-label';
 
 Vue.use(Router);
 
@@ -40,6 +43,21 @@ export default new Router({
       path: '/information-detail/:id',
       name: 'Information-detail',
       component: InformationDetail,
+    },
+    {
+      path: '/bind-phone',
+      name: 'Bind-phone',
+      component: BindPhone,
+    },
+    {
+      path: '/user-infomation',
+      name: 'User-infomation',
+      component: UserInformation,
+    },
+    {
+      path: '/user-label',
+      name: 'User-label',
+      component: UserLabel,
     },
   ],
   mode: 'history',
