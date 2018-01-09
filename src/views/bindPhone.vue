@@ -34,9 +34,19 @@ export default {
     }
   },
   methods: {
-    sendSms() {
+    async sendSms() {
       if (this.phone.length === 11) {
-        api.validCode(this.phone);
+        await api.validCode(this.phone);
+        this.timer = setInterval(() => {
+          if (this.count > 0) {
+            this.count = this.count - 1;
+            this.text = `已发送 ${this.count}s`;
+          } else {
+            clearInterval(this.timer);
+            this.count = 0;
+            this.text = '发送验证码';
+          }
+        });
       } else {
         MessageBox.alert('请填正确的手机号码');
       }

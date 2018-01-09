@@ -29,7 +29,7 @@ const globalModule = {
   actions: {
     async getUserInfo({ commit }, $router) {
       const res = await api.getInfo();
-      if (res.code === 10030) {
+      if (res.code === -1) {
         location.assign('http://ghw.work2pix.top/app/login/wx-code');
       } else if (res.code === 10031) {
         $router.replace({ name: 'Bind-phone' });

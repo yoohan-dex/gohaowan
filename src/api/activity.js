@@ -12,7 +12,7 @@ const getActivityList = (page, pageSize) =>
 
 const getActivityDetail = id =>
   request({
-    url: '/store/activity/detail',
+    url: '/app/activity/detail',
     method: 'get',
     params: {
       id,

@@ -31,7 +31,7 @@ service.interceptors.response.use(
   (response) => {
     console.log(response);
     const code = response.data.code;
-    if (code === 10030 || code === 10031) {
+    if (code === 10030 || code === 10031 || code === -1) {
       return response.data;
     }
     if (response.data.code !== 0) {
