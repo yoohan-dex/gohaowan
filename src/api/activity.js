@@ -35,9 +35,28 @@ const search = (text, page) =>
     },
   });
 
+const action = (id, form) =>
+  request({
+    url: '/app/activity/join',
+    method: 'post',
+    data: {
+      activity_id: id,
+      join_form: form,
+    },
+  });
+const pay = id =>
+  request({
+    url: '/app/order/pay',
+    method: 'get',
+    params: {
+      id,
+    },
+  });
 export default {
   getActivityDetail,
   getActivityList,
   getSearchHistory,
   search,
+  action,
+  pay,
 };

@@ -42,6 +42,12 @@ export default {
       item: state => state.activity.active,
     }),
   },
+  methods: {
+    handleAction() {
+      console.log('??');
+      this.$store.dispatch('action');
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

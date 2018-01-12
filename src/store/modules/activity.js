@@ -1,5 +1,6 @@
 import moment from 'moment';
 import api from '../../api/activity';
+import wx from 'weixin-js-sdk';
 
 const activityModule = {
   state: {
@@ -75,6 +76,20 @@ const activityModule = {
       );
       item.join_form = JSON.parse(item.join_form);
       commit('setActive', item);
+    },
+    async action({ commit }, { id, form }) {
+      const res = await api.action(id, form);
+      if (res.code === 0) {
+        if (res.data.need_pay) {
+          const response = await api.pay(id);
+          if (response.code === 0) {
+            console.log(response);
+            // wx.chooseWXPay({
+            //   times
+            // })
+          }
+        }
+      }
     },
   },
 };
