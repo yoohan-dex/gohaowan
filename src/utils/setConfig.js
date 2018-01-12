@@ -1,3 +1,4 @@
+import wx from 'weixin-js-sdk';
 import api from '../api/wx';
 
 const jsApiList = ['chooseWXPay'];
