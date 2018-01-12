@@ -77,16 +77,30 @@ const activityModule = {
       item.join_form = JSON.parse(item.join_form);
       commit('setActive', item);
     },
-    async action({ commit }, { id, form }) {
+    async action({ commit, state }) {
+      console.log(state.active);
+      const { id, join_form } = state.active;
+      const form = {};
+      join_form.forEach((v) => {
+        form[v.key] = v.value;
+      });
       const res = await api.action(id, form);
       if (res.code === 0) {
         if (res.data.need_pay) {
           const response = await api.pay(id);
           if (response.code === 0) {
             console.log(response);
-            // wx.chooseWXPay({
-            //   times
-            // })
+            const { timestamp, nonceStr, signType, signature } = response.data;
+            wx.chooseWXPay({
+              timestamp,
+              nonceStr,
+              signType,
+              signature,
+              package: response.data.package,
+              success() {
+                alert('支付成功');
+              },
+            });
           }
         }
       }

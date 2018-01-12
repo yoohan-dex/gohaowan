@@ -1,5 +1,8 @@
 <template>
 <div>
+  <div class="menu">
+    <img :src="user.headimgurl" alt="" @click="handleOpen">
+  </div>
   <div class="nav-bar">
     <div :class="[{ active: nav === 0 }, 'item']" @click="handleNavSelected(0)">
       <p>活动</p>
@@ -48,9 +51,37 @@
   </div>  
 
     </div>
-    
+    <div :class="['sidebar-shadow', {'sidebar-shadow-show': open}]" @click="handleOpen"></div>
+    <div :class="['sidebar', {'sidebar-show': open}]">
+      <div class="sidebar-header">
+        <div class="left">
+          <img :src="user.headimgurl" alt="">
+          <div class="name">{{user.nickname}}</div>
+        </div>
+        <div class="right">
+          <img src="../assets/arrow2.svg" alt="">
+        </div>
+      </div>
+      <div class="sidebar-content">
+        <div class="item">
+          <img src="../assets/order.png" alt="">
+          我的订单
+        </div>
+        <div class="item">
+          <img src="../assets/join.png" alt="">
+          参与过的
+        </div>
+        <div class="item">
+          <img src="../assets/comm.png" alt="">
+          我评论的
+        </div>
+        <div class="item item-last" @click="to('Follow')">
+          <img src="../assets/heart.png" alt="">
+          我关注的
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
   
 </template>
@@ -76,6 +107,7 @@ export default {
     return {
       loading: false,
       height: 0,
+      open: false,
     };
   },
   created() {
@@ -91,6 +123,7 @@ export default {
       infoList: state => state.information.list,
       top: state => state.information.top,
       nav: state => state.global.nav,
+      user: state => state.global.user,
     }),
   },
   mounted() {
@@ -107,6 +140,9 @@ export default {
   methods: {
     handleNavSelected(id) {
       this.$store.commit('setNav', id);
+    },
+    handleOpen() {
+      this.open = !this.open;
     },
     handleSearch() {
       this.$router.push({
@@ -132,6 +168,9 @@ export default {
       //   this.list.push(item);
       //   this.loading = false;
       // }, 1000);
+    },
+    to(name) {
+      this.$router.push({ name });
     },
   },
 };
@@ -260,5 +299,94 @@ li {
 }
 a {
   color: white;
+}
+.menu {
+  position: fixed;
+  z-index: 10;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  img {
+    border-radius: 50%;
+    width: 30px;
+  }
+}
+.sidebar,
+.sidebar-shadow {
+  z-index: 20;
+  position: fixed;
+  top: 0;
+  width: 75%;
+  height: 100%;
+  background: white;
+  transition: transform 0.3s;
+  transform: translate(-100%);
+}
+.sidebar-shadow {
+  z-index: 15;
+  width: 100%;
+  background: #777;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.sidebar-shadow-show {
+  transform: translate(0);
+  opacity: 0.5;
+}
+.sidebar-show {
+  transform: translate(0);
+}
+
+.sidebar-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .left {
+    width: 80%;
+    padding: 20px 0 0 20px;
+    img {
+      border-radius: 50%;
+      width: 79px;
+    }
+    .name {
+      font-size: 25px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+  }
+  .right {
+    width: 20%;
+    display: flex;
+    padding-right: 15px;
+
+    justify-content: flex-end;
+    img {
+      width: 15px;
+    }
+  }
+}
+
+.sidebar-content {
+  width: 100%;
+  margin-top: 30px;
+  .item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0 15px 30px;
+    align-items: center;
+    font-size: 17px;
+    color: #333;
+    border-bottom: 2px solid #e3e3e3;
+
+    img {
+      width: 25px;
+      margin-right: 15px;
+    }
+  }
+  .item-last {
+    border-bottom: 0;
+  }
 }
 </style>

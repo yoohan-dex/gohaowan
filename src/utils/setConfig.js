@@ -2,7 +2,7 @@ import wx from 'weixin-js-sdk';
 import api from '../api/wx';
 
 const jsApiList = ['chooseWXPay'];
-const debug = true;
+const debug = false;
 export default async () => {
   const res = await api.getConfig();
   if (res.code === 0) {

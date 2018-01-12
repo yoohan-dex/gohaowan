@@ -7,6 +7,7 @@ const globalModule = {
     phone: '',
     name: '',
     sex: 0,
+    followNav: 0,
   },
   mutations: {
     setNav(state, nav) {
@@ -25,6 +26,9 @@ const globalModule = {
       state.sex = user.sex;
       state.name = user.nickname;
     },
+    setFollowNav(state, nav) {
+      state.followNav = nav;
+    },
   },
   actions: {
     async getUserInfo({ commit }, $router) {
@@ -34,6 +38,7 @@ const globalModule = {
       } else if (res.code === 10031) {
         $router.replace({ name: 'Bind-phone' });
       } else {
+        console.log('user', res.data);
         commit('setUser', res.data);
       }
     },

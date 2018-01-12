@@ -11,6 +11,7 @@ import SearchView from '../views/Search-view';
 import BindPhone from '../views/bindPhone';
 import UserInformation from '../views/User-information';
 import UserLabel from '../views/User-label';
+import Following from '../views/following';
 
 Vue.use(Router);
 
@@ -60,6 +61,11 @@ const router = new Router({
       path: '/user-label',
       name: 'User-label',
       component: UserLabel,
+    },
+    {
+      path: '/following',
+      name: 'Follow',
+      component: Following,
     },
   ],
   mode: 'history',
