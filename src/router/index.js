@@ -1,18 +1,20 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Index from '@/views/Index';
-import ActivityDetail from '@/views/Activity-detail';
-import InformationDetail from '@/views/Information-detail';
-import DyForm from '@/views/DyForm';
-import ConfirmItem from '@/views/ConfirmItem';
-import SearchView from '@/views/Search-view';
-import BindPhone from '@/views/bindPhone';
-import UserInformation from '@/views/User-information';
-import UserLabel from '@/views/User-label';
+import setConfig from '../utils/setConfig';
+
+import ActivityDetail from '../views/Activity-detail';
+import InformationDetail from '../views/Information-detail';
+import DyForm from '../views/DyForm';
+import ConfirmItem from '../views/ConfirmItem';
+import SearchView from '../views/Search-view';
+import BindPhone from '../views/bindPhone';
+import UserInformation from '../views/User-information';
+import UserLabel from '../views/User-label';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -71,3 +73,13 @@ export default new Router({
     return {};
   },
 });
+router.beforeEach((to, from, next) => {
+  console.error('what??');
+  next();
+});
+router.afterEach(() => {
+  console.log('??');
+  setConfig();
+});
+
+export default router;

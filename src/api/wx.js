@@ -46,6 +46,13 @@ function setTag(data) {
     data,
   });
 }
+
+function getConfig() {
+  return request({
+    url: '/app/wx/js-config',
+    method: 'get',
+  });
+}
 export default {
   getInfo,
   getTag,
@@ -53,4 +60,5 @@ export default {
   validCode,
   updateInfo,
   bindPhone,
+  getConfig,
 };
