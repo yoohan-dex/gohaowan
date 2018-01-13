@@ -115,12 +115,12 @@ const activityModule = {
           const response = await api.pay(res.data.id);
           if (response.code === 0) {
             console.log(response);
-            const { timestamp, nonceStr, signType, signature } = response.data;
+            const { timestamp, nonceStr, signType, paySign } = response.data;
             wx.chooseWXPay({
               timestamp,
               nonceStr,
               signType,
-              signature,
+              paySign,
               package: response.data.package,
               success() {
                 alert('支付成功');
