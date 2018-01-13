@@ -3,15 +3,17 @@
     <detail-title :item="item" :handleFollow="handleFollow"></detail-title>
     <detail-content :data="item"></detail-content>
     <comment></comment>
-    <div class="space"></div>
-    <div class="bottom-btn">
-      <div class="price">
-        {{item.join_fee}}/人
-      </div>
-      <router-link :to="{name: 'Activity-action'}" class="apply">
-        立即报名
-      </router-link>
-    </div>  
+    <div v-show="item.can_join_online === 1">
+      <div class="space"></div>
+      <div class="bottom-btn">
+        <div class="price">
+          {{item.join_fee}}/人
+        </div>
+        <router-link :to="{name: 'Activity-action'}" class="apply">
+          立即报名
+        </router-link>
+      </div>  
+    </div>
   </div>
 </template>
 <script>
