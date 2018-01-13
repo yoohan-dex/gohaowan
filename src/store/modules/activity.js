@@ -115,10 +115,10 @@ const activityModule = {
           const response = await api.pay(res.data.id);
           if (response.code === 0) {
             console.log(response);
-            const { timestamp, nonceStr, signType, paySign } = response.data;
+            const { timeStamp, nonceStr, signType, paySign } = response.data;
             wx.chooseWXPay({
               debug: true,
-              timestamp,
+              timestamp: timeStamp,
               nonceStr,
               signType,
               paySign,
