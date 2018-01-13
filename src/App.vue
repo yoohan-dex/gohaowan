@@ -28,7 +28,6 @@ export default {
     async login() {
       const $router = this.$router;
       this.$store.dispatch('getUserInfo', $router);
-      // if (!this.phone) this.$router.replace({ name: 'Bind-phone' });
     },
   },
   watch: {

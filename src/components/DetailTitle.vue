@@ -18,9 +18,9 @@
         <img :src="item.cover_image" alt="">
       </div>
       <div class="top" v-show="!playing">
-        <div class="like">
+        <div class="like" @click="handleFollow(item.id, 'activity', item.is_follow)">
           <img src="../assets/liked.svg" alt="">
-          <p>{{item.upvote_count}}</p>
+          <p>{{item.follow_count}}</p>
         </div>
       </div>
       <div class="type" v-show="!playing" v-if="item.video_url">
@@ -69,6 +69,9 @@ export default {
   props: {
     item: {
       type: Object,
+    },
+    handleFollow: {
+      type: Function,
     },
   },
   data() {

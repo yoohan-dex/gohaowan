@@ -1,8 +1,8 @@
 <template>
   <div class="wrap">
-  <div class="like" @click="handleLike">
+  <div class="like" @click="handleFollow(item.id, 'activity', item.is_follow)">
     <img src="../assets/liked.svg" alt="">
-    <p>{{item.upvote_count}}</p>
+    <p>{{item.follow_count}}</p>
   </div>
   <router-link :to="{ name: 'Activity-detail', params: { id: item.id }}" class="container">
     <div class="background" :style="{height: height + 'px'}" >
@@ -62,6 +62,9 @@ export default {
         cover_image: '',
       },
     },
+    handleFollow: {
+      type: Function,
+    },
   },
   mounted() {
     const rate = window.innerWidth / 16;
@@ -77,9 +80,7 @@ export default {
       height: '',
     };
   },
-  methods: {
-    handleLike() {},
-  },
+  methods: {},
 };
 </script>
 <style lang="scss" scoped>

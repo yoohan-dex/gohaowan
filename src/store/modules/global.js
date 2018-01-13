@@ -26,9 +26,6 @@ const globalModule = {
       state.sex = user.sex;
       state.name = user.nickname;
     },
-    setFollowNav(state, nav) {
-      state.followNav = nav;
-    },
   },
   actions: {
     async getUserInfo({ commit }, $router) {

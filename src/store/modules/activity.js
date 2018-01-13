@@ -1,6 +1,6 @@
 import moment from 'moment';
-import api from '../../api/activity';
 import wx from 'weixin-js-sdk';
+import api from '../../api/activity';
 
 const activityModule = {
   state: {
@@ -50,6 +50,31 @@ const activityModule = {
     setActiveKeyword(state, keyword) {
       state.activeKeyword = keyword;
     },
+    setActivityFollow(state, id) {
+      state.list.forEach((v) => {
+        if (v.id === id) {
+          v.is_follow = true;
+          v.follow_count += 1;
+        }
+      });
+
+      if (state.active.id === id) {
+        state.active.is_follow = true;
+        state.active.follow_count += 1;
+      }
+    },
+    setActivityUnfollow(state, id) {
+      state.list.forEach((v) => {
+        if (v.id === id) {
+          v.is_follow = false;
+          v.follow_count -= 1;
+        }
+      });
+      if (state.active.id === id) {
+        state.active.is_follow = false;
+        state.active.follow_count -= 1;
+      }
+    },
   },
   actions: {
     async getList({ commit, state }) {
@@ -87,7 +112,7 @@ const activityModule = {
       const res = await api.action(id, form);
       if (res.code === 0) {
         if (res.data.need_pay) {
-          const response = await api.pay(id);
+          const response = await api.pay(res.data.id);
           if (response.code === 0) {
             console.log(response);
             const { timestamp, nonceStr, signType, signature } = response.data;

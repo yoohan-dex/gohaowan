@@ -23,7 +23,7 @@
       </div>
       <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
         <li v-for="(item, i) in list" :key="i">
-          <activity :item="item">
+          <activity :item="item" :handleFollow="handleFollow">
             </activity>
         </li>
       </ul>
@@ -117,8 +117,7 @@ export default {
   },
   computed: {
     ...mapState({
-      list: state =>
-        state.activity.list.filter(v => v.id !== 1 && v.id !== 18144330753225),
+      list: state => state.activity.list,
       scroll: state => state.activity.scroll,
       infoList: state => state.information.list,
       top: state => state.information.top,
@@ -157,6 +156,13 @@ export default {
         name: 'Information-detail',
         params: { id: this.top.id },
       });
+    },
+    handleFollow(id, type, follow) {
+      if (follow) {
+        this.$store.dispatch('unfollow', { id, type });
+      } else {
+        this.$store.dispatch('follow', { id, type });
+      }
     },
     loadMore() {
       this.$store.dispatch('getList');

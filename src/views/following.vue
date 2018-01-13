@@ -1,19 +1,19 @@
 <template>
   <div class="follow-container">
     <div class="nav-bar">
-      <div :class="[{ active: nav === 0 }, 'item']" @click="handleNavSelected(0)">
+      <div :class="[{ active: nav === 'user' }, 'item']" @click="handleNavSelected('user')">
         <p>用户</p>
       </div>
-      <div :class="[{ active: nav === 1 }, 'item']" @click="handleNavSelected(1)">
+      <div :class="[{ active: nav === 'activity' }, 'item']" @click="handleNavSelected('activity')">
         <p>活动</p>
       </div>
-      <div :class="[{ active: nav === 2 }, 'item']" @click="handleNavSelected(2)">
+      <div :class="[{ active: nav === 'store' }, 'item']" @click="handleNavSelected('store')">
         <p>商户</p>
       </div>
     </div>
 
     <div class="tab">
-      <div class="tab-container" v-if="nav === 0" :style="{display: nav === 0 ? 'block' : 'none'}">
+      <div class="tab-container" v-if="nav === 'user'" :style="{display: nav === 0 ? 'block' : 'none'}">
         <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
           <li v-for="(item, i) in list" :key="i">
             <user-item :item="item">
@@ -38,12 +38,15 @@ export default {
   components: { UserItem },
   computed: {
     ...mapState({
-      nav: state => state.global.followNav,
+      nav: state => state.follow.nav,
     }),
   },
   methods: {
     handleNavSelected(nav) {
       this.$store.commit('setFollowNav', nav);
+    },
+    loadMore() {
+      this.$store.dispatch('getFollowList', this.nav);
     },
   },
 };

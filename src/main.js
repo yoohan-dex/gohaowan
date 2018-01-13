@@ -12,7 +12,6 @@ import './assets/richtext.css';
 Vue.config.productionTip = false;
 
 Vue.use(MintUI);
-console.log('yes');
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

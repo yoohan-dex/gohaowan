@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <detail-title :item="item"></detail-title>
+    <detail-title :item="item" :handleFollow="handleFollow"></detail-title>
     <detail-content :data="item"></detail-content>
     <comment></comment>
     <div class="space"></div>
@@ -32,6 +32,15 @@ export default {
     this.$store.dispatch('getDetail', { id });
   },
   components: { DetailTitle, DetailContent, Comment },
+  methods: {
+    handleFollow(id, type, follow) {
+      if (follow) {
+        this.$store.dispatch('unfollow', { id, type });
+      } else {
+        this.$store.dispatch('follow', { id, type });
+      }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
