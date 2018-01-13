@@ -99,7 +99,7 @@ const activityModule = {
       item.end_join_time = moment(item.end_join_time * 1000).format(
         'YYYY-MM-DD',
       );
-      item.join_form = JSON.parse(item.join_form);
+      item.join_form = item.join_form ? JSON.parse(item.join_form) : [];
       commit('setActive', item);
     },
     async action({ commit, state }) {
