@@ -117,6 +117,7 @@ const activityModule = {
             console.log(response);
             const { timestamp, nonceStr, signType, paySign } = response.data;
             wx.chooseWXPay({
+              debug: true,
               timestamp,
               nonceStr,
               signType,
@@ -124,6 +125,9 @@ const activityModule = {
               package: response.data.package,
               success() {
                 alert('支付成功');
+              },
+              fail(error) {
+                alert('支付失败', error);
               },
             });
           }
