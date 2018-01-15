@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-  <div class="like" @click="handleFollow(item.id, 'activity', item.is_follow)">
+  <div class="like" v-show="!options.withoutLike" @click="handleFollow(item.id, 'activity', item.is_follow)">
     <img src="../assets/liked.svg" alt="">
     <p>{{item.follow_count}}</p>
   </div>
@@ -64,6 +64,12 @@ export default {
     },
     handleFollow: {
       type: Function,
+    },
+    options: {
+      type: Object,
+      default() {
+        return {};
+      },
     },
   },
   mounted() {

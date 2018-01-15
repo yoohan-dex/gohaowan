@@ -20,6 +20,12 @@ const globalModule = {
       state.name = name;
       state.sex = sex;
     },
+    setUserNameAndSex(state, { nickname, sex }) {
+      state.name = nickname;
+      state.sex = sex;
+      state.user.nickname = nickname;
+      state.user.sex = sex;
+    },
     setUser(state, user) {
       state.user = user;
       state.phone = user.phone;

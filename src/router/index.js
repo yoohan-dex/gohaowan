@@ -5,6 +5,8 @@ import setConfig from '../utils/setConfig';
 
 import ActivityDetail from '../views/Activity-detail';
 import InformationDetail from '../views/Information-detail';
+import StoreDetail from '../views/StoreDetail';
+import UserDetail from '../views/User-detail';
 import DyForm from '../views/DyForm';
 import ConfirmItem from '../views/ConfirmItem';
 import SearchView from '../views/Search-view';
@@ -12,6 +14,9 @@ import BindPhone from '../views/bindPhone';
 import UserInformation from '../views/User-information';
 import UserLabel from '../views/User-label';
 import Following from '../views/following';
+import Ticket from '../views/ticket';
+import Profile from '../views/User-profile';
+import MyActivity from '../views/my-activity';
 
 Vue.use(Router);
 
@@ -27,6 +32,7 @@ const router = new Router({
       name: 'Activity-detail',
       component: ActivityDetail,
     },
+    { path: '/store-detail/:id', name: 'Store-detail', component: StoreDetail },
     {
       path: '/activity-detail/:id/action',
       name: 'Activity-action',
@@ -66,6 +72,26 @@ const router = new Router({
       path: '/following',
       name: 'Follow',
       component: Following,
+    },
+    {
+      path: '/user-detail/:id',
+      name: 'User-detail',
+      component: UserDetail,
+    },
+    {
+      path: '/ticket',
+      name: 'Ticket',
+      component: Ticket,
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
+    },
+    {
+      path: '/my-activity',
+      name: 'My-activity',
+      component: MyActivity,
     },
   ],
   mode: 'history',

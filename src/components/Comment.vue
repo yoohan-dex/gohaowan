@@ -2,30 +2,29 @@
   <div class="inner-container">
     <div class="top">
       <p class="title">玩家评论</p>
-      <p>
+      <p @click="handleClick">
         <img src="../assets/comments.svg" alt="">
         评论
       </p>
     </div>
-    <ul v-for="i in [1, 2, 3]" :key="i">
-      <li>
+    <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+      <li  v-for="(v, i) in list" :key="i">
         <div class="item">
-          
           <div class="content-box">
             <div class="content-title">
               <div class="avatar">
-                <img src="../assets/avatar.png" alt="">
-                <p>一只无聊的蘑菇</p>
+                <img :src="v.headimgurl" alt="">
+                <p>{{v.nickname}}</p>
               </div>
-              <small>2017-11-21 19:50</small>
+              <small>{{v.create_time}}</small>
             </div>
             <div class="content">
-              发发发发发尼玛阿斯顿减肥 i阿斯顿减肥 i啊手机东方；啊接了；发但是家里啊减肥了撒娇地方；萨里德肌肤啊；类似的肌肤撒；两地分居阿三；老地方就
+              {{v.content}}
             </div>
           <div class="footer">
             <p class="zan">
               <img src="../assets/zan.svg" alt="">
-              2
+              {{v.upvote}}
             </p>
           </div>
           </div>
@@ -35,8 +34,46 @@
   </div>
 </template>
 <script>
+import { MessageBox } from 'mint-ui';
+import api from '../api/activity';
+
 export default {
   name: 'comment',
+  props: {
+    loadMore: {
+      type: Function,
+    },
+    reload: {
+      type: Function,
+    },
+    item: {
+      type: Object,
+    },
+    list: {
+      type: Array,
+    },
+    options: {
+      type: Object,
+      default() {
+        return {
+          type: 'activity',
+        };
+      },
+    },
+  },
+  methods: {
+    handleClick() {
+      MessageBox.prompt('评论', '请输入评论').then(async ({ value, action }) => {
+        if (value && action === 'confirm') {
+          const res = await api.comment(this.item.id, this.options.type, value);
+          if (res.code === 0) {
+            MessageBox('提示', '评论成功');
+            this.reload();
+          }
+        }
+      });
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -72,7 +109,7 @@ p {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 25px 15px 0;
+  padding: 15px 15px 15px;
 }
 .avatar {
   display: flex;
@@ -86,6 +123,7 @@ p {
 }
 .content-box {
   margin-left: 5px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   .content-title {

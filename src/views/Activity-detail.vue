@@ -2,7 +2,7 @@
   <div class="container">
     <detail-title :item="item" :handleFollow="handleFollow"></detail-title>
     <detail-content :data="item"></detail-content>
-    <comment></comment>
+    <comment :item="item" :list="comments" :loadMore="loadMore" :reload="reload"></comment>
     <div v-show="item.can_join_online === 1">
       <div class="space"></div>
       <div class="bottom-btn">
@@ -24,16 +24,27 @@ import Comment from '../components/Comment';
 
 export default {
   name: 'activity-detail',
+  data() {
+    return {
+      page: 1,
+    };
+  },
   computed: {
     ...mapState({
       item: state => state.activity.active,
+      comments: state => state.comments.list.activity,
     }),
   },
   created() {
     const id = this.$route.params.id;
     this.$store.dispatch('getDetail', { id });
+    // this.$store.dispatch('getCommentsList', {type: 'activity', id, page: this.page });
+    // this.page += 1;
   },
   components: { DetailTitle, DetailContent, Comment },
+  destroyed() {
+    this.$store.commit('resetActiveId');
+  },
   methods: {
     handleFollow(id, type, follow) {
       if (follow) {
@@ -41,6 +52,26 @@ export default {
       } else {
         this.$store.dispatch('follow', { id, type });
       }
+    },
+    loadMore() {
+      const id = this.$route.params.id;
+
+      this.$store.dispatch('getCommentsList', {
+        type: 'activity',
+        id,
+        page: this.page,
+      });
+      this.page += 1;
+    },
+    reload() {
+      const id = this.$route.params.id;
+      this.page = 1;
+
+      this.$store.dispatch('regetCommentsList', {
+        type: 'activity',
+        id,
+        page: this.page,
+      });
     },
   },
 };

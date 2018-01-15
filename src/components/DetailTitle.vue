@@ -18,8 +18,9 @@
         <img :src="item.cover_image" alt="">
       </div>
       <div class="top" v-show="!playing">
-        <div class="like" @click="handleFollow(item.id, 'activity', item.is_follow)">
-          <img src="../assets/liked.svg" alt="">
+        <div :class="['like', {liked: item.is_follow}]" @click="handleFollow(item.id, options.type, item.is_follow)">
+          <img v-if="item.is_follow" src="../assets/like.svg" alt="">
+          <img v-else src="../assets/liked.svg" alt="">
           <p>{{item.follow_count}}</p>
         </div>
       </div>
@@ -37,14 +38,16 @@
       <p class="location">
         <img src="../assets/location2.svg" alt="">
         {{item.address}} </p>
-      <p class="time">
+      <p class="time" v-if="options.type === 'activity'">
         <img src="../assets/time.svg" alt="">
         {{item.start_time}}至{{item.end_time}} </p>
-      <div class="text-item">
         <p class="phone">
           <img src="../assets/phone.svg" alt="">
-          80800808</p>
-        <p class="status">{{status}}</p>
+          <a :href="`tel:${item.store_phone}`">{{item.store_phone}}</a></p>
+      <div class="text-item" v-if="options.type === 'activity'">
+          <p class="" @click="handleStore(item.store_id)">
+          主办方: {{item.store_name}}</p>
+        <p  class="status">{{status}}</p>
       </div>
     </div>
   </div>
@@ -72,6 +75,14 @@ export default {
     },
     handleFollow: {
       type: Function,
+    },
+    options: {
+      type: Object,
+      default() {
+        return {
+          type: 'activity',
+        };
+      },
     },
   },
   data() {
@@ -119,6 +130,12 @@ export default {
           this.showPlay = true;
         }
       }
+    },
+    handleStore(id) {
+      this.$router.push({
+        name: 'Store-detail',
+        params: { id },
+      });
     },
   },
 };
@@ -190,6 +207,14 @@ export default {
           color: white;
         }
       }
+      .liked {
+        background: transparent;
+        border: 2px solid #ff5d57;
+
+        p {
+          color: #ff5d57;
+        }
+      }
     }
     // }
     .type {
@@ -256,6 +281,10 @@ export default {
   }
   p {
     font-size: 14px;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
   }
   .location {
     margin: 9px 0 0;

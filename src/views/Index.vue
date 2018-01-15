@@ -58,16 +58,16 @@
           <img :src="user.headimgurl" alt="">
           <div class="name">{{user.nickname}}</div>
         </div>
-        <div class="right">
+        <div class="right" @click="to('Profile')">
           <img src="../assets/arrow2.svg" alt="">
         </div>
       </div>
       <div class="sidebar-content">
-        <div class="item">
+        <div class="item" @click="to('Ticket')">
           <img src="../assets/order.png" alt="">
           我的订单
         </div>
-        <div class="item">
+        <div class="item" @click="to('My-activity')">
           <img src="../assets/join.png" alt="">
           参与过的
         </div>
@@ -246,7 +246,7 @@ export default {
   .tab-container {
     display: block;
     width: 100%;
-    min-height: 600px;
+    min-height: calc(100% + 10px);
     padding-top: 44px;
     background: #f2f2f2;
   }

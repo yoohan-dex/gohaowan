@@ -82,8 +82,8 @@ export default {
     });
   },
   methods: {
-    async handleSearchItem() {
-      this.$store.commit('setActiveKeyword', this.keyword);
+    async handleSearchItem(keyword) {
+      this.$store.commit('setActiveKeyword', keyword);
       this.$store.dispatch('getSearchList');
       this.ini = false;
     },

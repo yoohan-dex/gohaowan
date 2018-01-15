@@ -9,7 +9,7 @@
       </div>
     </div>
     <detail-content :data="item" :member="false"></detail-content>
-    <comment></comment>
+    <comment :item="item" :list="comments" :loadMore="loadMore" :reload="reload" :options="options"></comment>
     <!-- <div class="bottom-btn">
       <div class="price">
         {{item.join_fee}}/人
@@ -27,17 +27,51 @@ import DetailContent from '../components/DetailContent';
 import Comment from '../components/Comment';
 
 export default {
-  name: 'activity-detail',
+  name: 'information-detail',
+  data() {
+    return {
+      options: {
+        type: 'information',
+      },
+      page: 1,
+    };
+  },
   computed: {
     ...mapState({
       item: state => state.information.active,
+      comments: state => state.comments.list.information,
     }),
   },
   created() {
     const id = this.$route.params.id;
     this.$store.dispatch('getInformationDetail', { id });
   },
+  destroyed() {
+    this.$store.commit('resetActiveId');
+  },
   components: { DetailTitle, DetailContent, Comment },
+  methods: {
+    loadMore() {
+      const id = this.$route.params.id;
+
+      this.$store.dispatch('getCommentsList', {
+        type: 'information',
+        id,
+        page: this.page,
+      });
+      this.page += 1;
+    },
+    reload() {
+      const id = this.$route.params.id;
+      this.page = 1;
+
+      this.$store.dispatch('regetCommentsList', {
+        type: 'information',
+        id,
+        page: this.page,
+      });
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

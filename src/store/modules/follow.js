@@ -2,6 +2,16 @@
 // import wx from 'weixin-js-sdk';
 import api from '../../api/follow';
 
+const followType = {
+  activity: 'setActivityFollow',
+  store: 'setStoreFollow',
+  user: 'setUserFollow',
+};
+const unfollowType = {
+  activity: 'setActivityUnfollow',
+  store: 'setStoreUnfollow',
+  user: 'setUserUnfollow',
+};
 const activityModule = {
   state: {
     nav: 'user',
@@ -27,6 +37,7 @@ const activityModule = {
     followPageIncrement(state, { type, list }) {
       state.page[type] += 1;
       state.list[type].push(...list);
+      console.log('state', state);
     },
 
     setActive(state, { type, item }) {
@@ -41,20 +52,35 @@ const activityModule = {
   },
   actions: {
     async getFollowList({ commit, state }, type) {
-      const res = api[type](state.page[type], state.pageSize);
-      commit('followPageIncrement', { type, list: res.data });
+      const res = await api[type](state.page[type], state.pageSize);
+      let list;
+      if (type !== 'user') {
+        list = res.data.map(v => ({
+          ...v,
+          id: v.relation_id,
+        }));
+      } else {
+        list = res.data;
+      }
+      commit('followPageIncrement', { type, list });
     },
-    async follow({ commit, state, dispatch }, { id, type }) {
+    async follow({ commit, state, dispatch }, { id, type, cb }) {
       const res = await api.follow(id, type);
       if (res.code === 0) {
-        commit('setActivityFollow', id);
+        commit(followType[type], id);
+        if (cb) {
+          cb();
+        }
       }
     },
-    async unfollow({ commit, state, dispatch }, { id, type }) {
-      console.log('unfollow');
+    async unfollow({ commit, state, dispatch }, { id, type, cb }) {
       const res = await api.unfollow(id, type);
       if (res.code === 0) {
-        commit('setActivityUnfollow', id);
+        commit(unfollowType[type], id);
+        console.log(unfollowType[type]);
+        if (cb) {
+          cb();
+        }
       }
     },
   },

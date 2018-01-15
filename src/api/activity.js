@@ -52,6 +52,53 @@ const pay = id =>
       id,
     },
   });
+const comment = (id, type, content) => {
+  const numtype = type === 'activity' ? 1 : type === 'store' ? 2 : 3;
+  return request({
+    url: '/app/comment/comment',
+    method: 'post',
+    data: {
+      relation_id: id,
+      type: numtype,
+      content,
+    },
+  });
+};
+const getComm = (id, page) =>
+  request({
+    url: '/app/comment/activity-list',
+    method: 'get',
+    params: {
+      id,
+      page,
+    },
+  });
+const getMy = page =>
+  request({
+    url: '/app/activity/my-list',
+    method: 'get',
+    params: {
+      page,
+    },
+  });
+const getOrder = page =>
+  request({
+    url: '/app/order/list',
+    method: 'get',
+    params: {
+      page,
+    },
+  });
+
+const getOtherList = id => page =>
+  request({
+    url: '/app/activity/other-list',
+    method: 'get',
+    params: {
+      user_id: id,
+      page,
+    },
+  });
 export default {
   getActivityDetail,
   getActivityList,
@@ -59,4 +106,9 @@ export default {
   search,
   action,
   pay,
+  comment,
+  getComm,
+  getMy,
+  getOrder,
+  getOtherList,
 };

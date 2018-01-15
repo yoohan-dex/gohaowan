@@ -3,3 +3,22 @@
   width: 15px;
   height: auto;
 }
+ul {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: block;
+  width: 100%;
+}
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  width: 100%;
+  background: #333;
+  color: white;
+}

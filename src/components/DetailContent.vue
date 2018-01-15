@@ -2,16 +2,16 @@
   <div class="inner-container">
 
     <div class="member-list" v-if="member">
-      <div class="left">
-        已报名 11/30
+      <div class="left" v-if="options.type === 'activity'">
+        已报名 {{data.join_list.length}} {{data.join_limit_number > 0 ? '/' + data.join_limit_number : ''}}
       </div>
+      <div class="left" v-else-if="options.type === 'store'">
+        玩过的用户
+      </div>
+
       <div class="right">
         <div class="avatar-list">
-          <img src="../assets/avatar.png" alt="" class="avatar">
-          <img src="../assets/avatar.png" alt="" class="avatar">
-          <img src="../assets/avatar.png" alt="" class="avatar">
-          <img src="../assets/avatar.png" alt="" class="avatar">
-          <img src="../assets/avatar.png" alt="" class="avatar">
+          <img v-for="(item, i) in data.join_list.filter((v, i) => i < 5)" :key="i" :src="item.headimgurl" alt="" class="avatar" @click="handleUser(item.user_id)">
         </div>
         <img class="member-arrow" src="../assets/arrow2.svg" alt="">
       </div>
@@ -32,6 +32,19 @@ export default {
     member: {
       type: Boolean,
       default: true,
+    },
+    options: {
+      type: Object,
+      default() {
+        return {
+          type: 'activity',
+        };
+      },
+    },
+  },
+  methods: {
+    handleUser(id) {
+      this.$router.push({ name: 'User-detail', params: { id } });
     },
   },
 };

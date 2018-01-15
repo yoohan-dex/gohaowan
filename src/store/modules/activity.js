@@ -14,6 +14,8 @@ const activityModule = {
     searchList: [],
     keyword: '',
     activeKeyword: '',
+    comments: [],
+    commentPage: 1,
   },
   getters: {},
   mutations: {
@@ -50,6 +52,10 @@ const activityModule = {
     setActiveKeyword(state, keyword) {
       state.activeKeyword = keyword;
     },
+    setComments(state, list) {
+      state.comments.push(...list);
+      state.commentPage += 1;
+    },
     setActivityFollow(state, id) {
       state.list.forEach((v) => {
         if (v.id === id) {
@@ -85,10 +91,19 @@ const activityModule = {
       const res = await api.search(state.activeKeyword, state.searchPage);
       commit('searchPageIncrement', res.data);
     },
+
     async getSearchList({ commit, state }) {
-      const res = await api.search(state.keyword, 1);
+      const res = await api.search(state.activeKeyword, 1);
       commit('searchGet', res.data);
     },
+    // async getCommentsList({ commit, state }) {
+    //   const res = await api.getComm(state.activeId, state.commentPage);
+    //   const list = res.data.map(v => ({
+    //     ...v,
+    //     create_time: moment(v.create_time * 1000).format('YYYY-MM-DD HH:MM'),
+    //   }));
+    //   commit('setComments', list);
+    // },
     async getDetail({ commit }, { id }) {
       commit('setActiveId', id);
       const res = await api.getActivityDetail(id);

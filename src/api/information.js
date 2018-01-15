@@ -12,7 +12,7 @@ function get(page) {
 
 function getDetail(id) {
   return request({
-    url: '/admin/information/detail',
+    url: '/app/information/detail',
     method: 'get',
     params: {
       id,

@@ -13,14 +13,29 @@
     </div>
 
     <div class="tab">
-      <div class="tab-container" v-if="nav === 'user'" :style="{display: nav === 0 ? 'block' : 'none'}">
+      <div class="tab-container" v-if="nav === 'user'" :style="{display: nav === 'user' ? 'block' : 'none'}">
         <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-          <li v-for="(item, i) in list" :key="i">
+          <li v-for="(item, i) in list.user" :key="i">
             <user-item :item="item">
               </user-item>
           </li>
         </ul>
-
+      </div>
+      <div class="tab-container" v-else-if="nav === 'activity'" :style="{display: nav === 'activity' ? 'block' : 'none'}">
+        <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+          <li v-for="(item, i) in list.activity" :key="i">
+            <activity :item="item" :options="options">
+              </activity>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-container" v-else-if="nav === 'store'" :style="{display: nav === 'store' ? 'block' : 'none'}">
+        <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+          <li v-for="(item, i) in list.store" :key="i">
+            <store-following :item="item">
+              </store-following>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -28,19 +43,40 @@
 <script>
 import { mapState } from 'vuex';
 import UserItem from '../components/user';
+import Activity from '../components/Activity';
+import StoreFollowing from '../components/StoreFollowing';
 
 export default {
   data() {
     return {
-      list: [],
+      options: {
+        withoutLike: true,
+      },
+      storeOptions: {
+        withoutLike: true,
+        withoutIndicator: true,
+      },
     };
   },
-  components: { UserItem },
+  components: { UserItem, Activity, StoreFollowing },
   computed: {
     ...mapState({
       nav: state => state.follow.nav,
+      list: state => state.follow.list,
     }),
   },
+  watch: {
+    nav() {
+      if (this.list[this.nav].length < 1) {
+        this.loadMore();
+      }
+    },
+  },
+  // created() {
+  //   ['user', 'activity', 'store'].forEach(v => {
+  //     this.loadMore(v);
+  //   });
+  // },
   methods: {
     handleNavSelected(nav) {
       this.$store.commit('setFollowNav', nav);
@@ -79,6 +115,18 @@ export default {
       color: #333;
     }
     border-bottom: 2px solid #fdda06;
+  }
+}
+.tab {
+  width: 100%;
+  height: 100%;
+
+  .tab-container {
+    display: block;
+    width: 100%;
+
+    padding-top: 44px;
+    background: #f2f2f2;
   }
 }
 </style>
