@@ -22,14 +22,12 @@ service.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log(error);
     Promise.reject(error);
   },
 );
 
 service.interceptors.response.use(
   (response) => {
-    console.log(response);
     const code = response.data.code;
     if (code === 10030 || code === 10031) {
       return response.data;
@@ -40,7 +38,6 @@ service.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    console.log(`err${error}`);
     MessageBox.alert(error.message, '请求错误');
     return Promise.reject(error);
   },

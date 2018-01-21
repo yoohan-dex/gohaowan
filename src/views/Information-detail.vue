@@ -9,7 +9,7 @@
       </div>
     </div>
     <detail-content :data="item" :member="false"></detail-content>
-    <comment :item="item" :list="comments" :loadMore="loadMore" :reload="reload" :options="options"></comment>
+    <comment :item="item" :list="comments" :loadMore="loadMore" :reload="reload" :options="options" :handleComment="handleComment"></comment>
     <!-- <div class="bottom-btn">
       <div class="price">
         {{item.join_fee}}/人
@@ -18,6 +18,10 @@
         立即报名
       </router-link>
     </div>   -->
+    <div class="comment-input" v-show="commenting">
+      <input @blur="finishComment" ref="comment" type="text" v-model="commentValue">
+      <button @click="handleCommentSubmit" >发送</button>
+    </div>
   </div>
 </template>
 <script>
@@ -25,6 +29,7 @@ import { mapState } from 'vuex';
 import DetailTitle from '../components/DetailTitle';
 import DetailContent from '../components/DetailContent';
 import Comment from '../components/Comment';
+import CommentApi from '../api/comments';
 
 export default {
   name: 'information-detail',
@@ -34,6 +39,9 @@ export default {
         type: 'information',
       },
       page: 1,
+      commenting: false,
+      commentValue: '',
+      type: 'information',
     };
   },
   computed: {
@@ -44,7 +52,11 @@ export default {
   },
   created() {
     const id = this.$route.params.id;
+    this.id = id;
     this.$store.dispatch('getInformationDetail', { id });
+  },
+  mounted() {
+    this.loadMore();
   },
   destroyed() {
     this.$store.commit('resetActiveId');
@@ -55,7 +67,7 @@ export default {
       const id = this.$route.params.id;
 
       this.$store.dispatch('getCommentsList', {
-        type: 'information',
+        type: this.type,
         id,
         page: this.page,
       });
@@ -66,10 +78,23 @@ export default {
       this.page = 1;
 
       this.$store.dispatch('regetCommentsList', {
-        type: 'information',
+        type: this.type,
         id,
         page: this.page,
       });
+      this.page += 1;
+    },
+    handleComment() {
+      this.commenting = true;
+      setTimeout(() => this.$refs.comment.focus(), 200);
+    },
+    finishComment() {
+      this.commenting = false;
+    },
+    async handleCommentSubmit() {
+      await CommentApi.comment(this.type)(this.id)(this.commentValue);
+      this.commenting = false;
+      this.reload();
     },
   },
 };

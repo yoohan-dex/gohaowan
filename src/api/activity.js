@@ -24,6 +24,11 @@ const getSearchHistory = () =>
     url: '/app/search/search-history',
     method: 'get',
   });
+const getTags = () =>
+  request({
+    url: '/app/activity-tag/list',
+    method: 'get',
+  });
 
 const search = (text, page) =>
   request({
@@ -32,6 +37,16 @@ const search = (text, page) =>
     params: {
       keyword: text,
       page,
+    },
+  });
+
+const searchByTag = tagId => page =>
+  request({
+    url: '/app/search/search-tag',
+    method: 'get',
+    params: {
+      page,
+      tag_id: tagId,
     },
   });
 
@@ -52,18 +67,18 @@ const pay = id =>
       id,
     },
   });
-const comment = (id, type, content) => {
-  const numtype = type === 'activity' ? 1 : type === 'store' ? 2 : 3;
-  return request({
-    url: '/app/comment/comment',
-    method: 'post',
-    data: {
-      relation_id: id,
-      type: numtype,
-      content,
-    },
-  });
-};
+// const comment = (id, type, content) => {
+//   const numtype = type === 'activity' ? 1 : type === 'store' ? 2 : 3;
+//   return request({
+//     url: '/app/comment/comment',
+//     method: 'post',
+//     data: {
+//       relation_id: id,
+//       type: numtype,
+//       content,
+//     },
+//   });
+// };
 const getComm = (id, page) =>
   request({
     url: '/app/comment/activity-list',
@@ -99,16 +114,28 @@ const getOtherList = id => page =>
       page,
     },
   });
+
+const getOrderDetail = id =>
+  request({
+    url: '/app/order/order-info',
+    method: 'get',
+    params: {
+      id,
+    },
+  });
 export default {
   getActivityDetail,
   getActivityList,
   getSearchHistory,
+  getTags,
   search,
+  searchByTag,
   action,
   pay,
-  comment,
+  // comment,
   getComm,
   getMy,
   getOrder,
+  getOrderDetail,
   getOtherList,
 };

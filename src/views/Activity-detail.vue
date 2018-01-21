@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="item">
     <detail-title :item="item" :handleFollow="handleFollow"></detail-title>
     <detail-content :data="item"></detail-content>
-    <comment :item="item" :list="comments" :loadMore="loadMore" :reload="reload"></comment>
-    <div v-show="item.can_join_online === 1">
+    <comment :item="item" :list="comments" :loadMore="loadMore" :handleComment="handleComment"></comment>
+    <div v-show="item.can_join_online === 1 && !commenting">
       <div class="space"></div>
       <div class="bottom-btn">
         <div class="price">
@@ -14,6 +14,10 @@
         </router-link>
       </div>  
     </div>
+    <div class="comment-input" v-show="commenting">
+      <input @blur="finishComment" ref="comment" type="text" v-model="commentValue">
+      <button @click="handleCommentSubmit" >发送</button>
+    </div>
   </div>
 </template>
 <script>
@@ -21,12 +25,16 @@ import { mapState } from 'vuex';
 import DetailTitle from '../components/DetailTitle';
 import DetailContent from '../components/DetailContent';
 import Comment from '../components/Comment';
+import CommentApi from '../api/comments';
 
 export default {
   name: 'activity-detail',
   data() {
     return {
       page: 1,
+      commenting: false,
+      commentValue: '',
+      type: 'activity',
     };
   },
   computed: {
@@ -37,9 +45,14 @@ export default {
   },
   created() {
     const id = this.$route.params.id;
+    this.id = id;
     this.$store.dispatch('getDetail', { id });
+    this.$store.commit('setDetailType', 'activity');
     // this.$store.dispatch('getCommentsList', {type: 'activity', id, page: this.page });
     // this.page += 1;
+  },
+  mounted() {
+    this.loadMore();
   },
   components: { DetailTitle, DetailContent, Comment },
   destroyed() {
@@ -54,24 +67,37 @@ export default {
       }
     },
     loadMore() {
-      const id = this.$route.params.id;
+      const id = this.id;
 
       this.$store.dispatch('getCommentsList', {
-        type: 'activity',
+        type: this.type,
         id,
         page: this.page,
       });
       this.page += 1;
     },
     reload() {
-      const id = this.$route.params.id;
+      const id = this.id;
       this.page = 1;
 
       this.$store.dispatch('regetCommentsList', {
-        type: 'activity',
+        type: this.type,
         id,
         page: this.page,
       });
+      this.page += 1;
+    },
+    handleComment() {
+      this.commenting = true;
+      setTimeout(() => this.$refs.comment.focus(), 200);
+    },
+    finishComment() {
+      this.commenting = false;
+    },
+    async handleCommentSubmit() {
+      await CommentApi.comment(this.type)(this.id)(this.commentValue);
+      this.commenting = false;
+      this.reload();
     },
   },
 };

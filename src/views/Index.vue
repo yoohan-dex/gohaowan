@@ -54,7 +54,7 @@
     <div :class="['sidebar-shadow', {'sidebar-shadow-show': open}]" @click="handleOpen"></div>
     <div :class="['sidebar', {'sidebar-show': open}]">
       <div class="sidebar-header">
-        <div class="left">
+        <div class="left" @click="handleHead">
           <img :src="user.headimgurl" alt="">
           <div class="name">{{user.nickname}}</div>
         </div>
@@ -80,6 +80,7 @@
           我关注的
         </div>
       </div>
+      <p class="mgr" @click="to('Mgr-login')">活动管理</p>
     </div>
   </div>
 
@@ -163,6 +164,14 @@ export default {
       } else {
         this.$store.dispatch('follow', { id, type });
       }
+    },
+    handleHead() {
+      this.$router.push({
+        name: 'User-detail',
+        params: {
+          id: this.user.id,
+        },
+      });
     },
     loadMore() {
       this.$store.dispatch('getList');
@@ -394,5 +403,10 @@ a {
   .item-last {
     border-bottom: 0;
   }
+}
+.mgr {
+  position: absolute;
+  bottom: 0;
+  text-indent: 20px;
 }
 </style>

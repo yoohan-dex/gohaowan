@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       phone: '',
-      count: 0,
+      count: 60,
       text: '发送验证码',
       valid: '',
     };
@@ -43,10 +43,10 @@ export default {
             this.text = `已发送 ${this.count}s`;
           } else {
             clearInterval(this.timer);
-            this.count = 0;
+            this.count = 60;
             this.text = '发送验证码';
           }
-        });
+        }, 1000);
       } else {
         MessageBox.alert('请填正确的手机号码');
       }
@@ -103,7 +103,7 @@ export default {
     button {
       background: #d1d4db;
       color: #999;
-      font-size: 15px;
+      font-size: 13px;
     }
   }
 

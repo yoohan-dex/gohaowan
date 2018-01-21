@@ -16,6 +16,7 @@ const activityModule = {
     activeKeyword: '',
     comments: [],
     commentPage: 1,
+    activeTag: '',
   },
   getters: {},
   mutations: {
@@ -40,6 +41,10 @@ const activityModule = {
     setActive(state, item) {
       state.active = item;
     },
+    resetSearch(state) {
+      state.searchList = [];
+      state.keyword = '';
+    },
     setActiveId(state, id) {
       state.activeId = id;
     },
@@ -48,6 +53,9 @@ const activityModule = {
     },
     setKeyword(state, keyword) {
       state.keyword = keyword;
+    },
+    setActiveTag(state, tag) {
+      state.activeTag = tag;
     },
     setActiveKeyword(state, keyword) {
       state.activeKeyword = keyword;
@@ -88,13 +96,24 @@ const activityModule = {
       commit('pageIncrement', res.data);
     },
     async getSearchNextList({ commit, state }) {
-      const res = await api.search(state.activeKeyword, state.searchPage);
-      commit('searchPageIncrement', res.data);
+      if (state.activeTag) {
+        const res = await api.searchByTag(state.activeTag)(state.searchPage);
+        commit('searchPageIncrement', res.data);
+      } else {
+        const res = await api.search(state.activeKeyword, state.searchPage);
+        commit('searchPageIncrement', res.data);
+      }
     },
 
-    async getSearchList({ commit, state }) {
-      const res = await api.search(state.activeKeyword, 1);
-      commit('searchGet', res.data);
+    async getSearchList({ commit, state }, { type }) {
+      if (type === 'tag') {
+        const res = await api.searchByTag(state.activeTag)(1);
+        commit('searchGet', res.data);
+      } else {
+        commit('setActiveTag', '');
+        const res = await api.search(state.activeKeyword, 1);
+        commit('searchGet', res.data);
+      }
     },
     // async getCommentsList({ commit, state }) {
     //   const res = await api.getComm(state.activeId, state.commentPage);
@@ -117,8 +136,7 @@ const activityModule = {
       item.join_form = item.join_form ? JSON.parse(item.join_form) : [];
       commit('setActive', item);
     },
-    async action({ commit, state }) {
-      console.log(state.active);
+    async action({ commit, state }, { router }) {
       const { id, join_form } = state.active;
       const form = {};
       join_form.forEach((v) => {
@@ -139,7 +157,8 @@ const activityModule = {
               paySign,
               package: response.data.package,
               success() {
-                alert('支付成功');
+                router.go(-3);
+                router.push('Ticket');
               },
               fail(error) {
                 alert('支付失败', error);

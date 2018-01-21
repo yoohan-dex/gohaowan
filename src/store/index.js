@@ -7,6 +7,7 @@ import follow from './modules/follow';
 import store from './modules/store';
 import user from './modules/user';
 import comments from './modules/comments';
+import detail from './modules/detail';
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ const Store = new Vuex.Store({
     store,
     user,
     comments,
+    detail,
   },
 });
 

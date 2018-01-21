@@ -23,7 +23,7 @@
             </div>
           <div class="footer">
             <p class="zan">
-              <img src="../assets/zan.svg" alt="">
+              <img @click="handleUpvote(v.id)" src="../assets/zan.svg" alt="">
               {{v.upvote}}
             </p>
           </div>
@@ -34,16 +34,10 @@
   </div>
 </template>
 <script>
-import { MessageBox } from 'mint-ui';
-import api from '../api/activity';
-
 export default {
   name: 'comment',
   props: {
     loadMore: {
-      type: Function,
-    },
-    reload: {
       type: Function,
     },
     item: {
@@ -51,6 +45,9 @@ export default {
     },
     list: {
       type: Array,
+    },
+    handleComment: {
+      type: Function,
     },
     options: {
       type: Object,
@@ -63,15 +60,25 @@ export default {
   },
   methods: {
     handleClick() {
-      MessageBox.prompt('评论', '请输入评论').then(async ({ value, action }) => {
-        if (value && action === 'confirm') {
-          const res = await api.comment(this.item.id, this.options.type, value);
-          if (res.code === 0) {
-            MessageBox('提示', '评论成功');
-            this.reload();
-          }
-        }
-      });
+      this.handleComment();
+      // MessageBox.prompt('评论', '请输入评论').then(
+      //   async ({ value, action }) => {
+      //     if (value && action === 'confirm') {
+      //       const res = await api.comment(
+      //         this.item.id,
+      //         this.options.type,
+      //         value,
+      //       );
+      //       if (res.code === 0) {
+      //         MessageBox('提示', '评论成功');
+      //         this.reload();
+      //       }
+      //     }
+      //   },
+      // );
+    },
+    handleUpvote(id) {
+      this.$store.dispatch('upvote', { id, type: this.options.type });
     },
   },
 };

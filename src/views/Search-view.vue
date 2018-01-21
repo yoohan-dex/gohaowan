@@ -2,7 +2,9 @@
   <div class="container">
     <div class="search-bar">
       <div class="search-area">
-        <input type="search" :value="keyword" @input="handleChange" @keyup.enter="handleSearchItem(keyword)">
+        <form action="" @submit.prevent="handleSearchItem(keyword)">
+          <input type="search" :value="keyword" @input="handleChange" >
+        </form>
         <img v-show="keyword" class="icon" src="../assets/close.svg" @click="handleClose">
       </div>
       <div class="cancel" @click="cancel">
@@ -26,8 +28,8 @@
           活动标签
         </div>
         <div class="bubble-block">
-          <div class="bubble bubble-light">
-            打棒球
+          <div class="bubble bubble-light" v-for="(item, i) in tags" :key="i" @click="handleSearchByTagItem(item.id)">
+            {{item.name}}
           </div>
         </div>
       </div>
@@ -58,6 +60,7 @@ export default {
   data() {
     return {
       history: [],
+      tags: [],
       ini: true,
     };
   },
@@ -72,7 +75,9 @@ export default {
   },
   async mounted() {
     const res = await api.getSearchHistory();
+    const tagRes = await api.getTags();
     this.history = res.data;
+    this.tags = tagRes.data;
   },
   updated() {
     this.$nextTick(() => {
@@ -84,10 +89,16 @@ export default {
   methods: {
     async handleSearchItem(keyword) {
       this.$store.commit('setActiveKeyword', keyword);
-      this.$store.dispatch('getSearchList');
+      this.$store.dispatch('getSearchList', { type: 'keyword' });
+      this.ini = false;
+    },
+    async handleSearchByTagItem(id) {
+      this.$store.commit('setActiveTag', id);
+      this.$store.dispatch('getSearchList', { type: 'tag' });
       this.ini = false;
     },
     cancel() {
+      this.$store.commit('resetSearch');
       this.$router.back();
     },
     handleChange(e) {
@@ -132,6 +143,9 @@ export default {
       display: inline-block;
       color: #c5c5c5;
       margin-left: 5px;
+    }
+    form {
+      width: 100%;
     }
     input {
       width: 100%;

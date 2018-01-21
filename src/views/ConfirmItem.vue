@@ -44,8 +44,7 @@ export default {
   },
   methods: {
     handleAction() {
-      console.log('??');
-      this.$store.dispatch('action');
+      this.$store.dispatch('action', { router: this.$router });
     },
   },
 };

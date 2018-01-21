@@ -17,6 +17,9 @@ import Following from '../views/following';
 import Ticket from '../views/ticket';
 import Profile from '../views/User-profile';
 import MyActivity from '../views/my-activity';
+import Joined from '../views/joined-list';
+import TicketDetail from '../views/ticket-detail';
+import MgrLogin from '../views/mgr-login';
 
 Vue.use(Router);
 
@@ -37,6 +40,11 @@ const router = new Router({
       path: '/activity-detail/:id/action',
       name: 'Activity-action',
       component: DyForm,
+    },
+    {
+      path: '/activity-detail/:id/users',
+      name: 'activityJoined',
+      component: Joined,
     },
     {
       path: '/confirm',
@@ -84,6 +92,11 @@ const router = new Router({
       component: Ticket,
     },
     {
+      path: '/ticket/:id',
+      name: 'Ticket-detail',
+      component: TicketDetail,
+    },
+    {
       path: '/profile',
       name: 'Profile',
       component: Profile,
@@ -93,10 +106,11 @@ const router = new Router({
       name: 'My-activity',
       component: MyActivity,
     },
+    { path: '/mgr-login', name: 'Mgr-login', component: MgrLogin },
   ],
   mode: 'history',
   base: '/front/',
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(to, from) {
     const toDepth = to.path.split('/').length;
     const fromDepth = from.path.split('/').length;
     if (fromDepth < toDepth) {
@@ -106,11 +120,9 @@ const router = new Router({
   },
 });
 router.beforeEach((to, from, next) => {
-  console.error('what??');
   next();
 });
 router.afterEach(() => {
-  console.log('??');
   setConfig();
 });
 
