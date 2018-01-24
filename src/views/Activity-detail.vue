@@ -55,6 +55,7 @@ export default {
   },
   mounted() {
     this.loadMore();
+    this.handleShare();
   },
   components: { DetailTitle, DetailContent, Comment },
   destroyed() {
