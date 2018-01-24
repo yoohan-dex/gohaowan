@@ -12,7 +12,7 @@
         <div class="item">
           <div class="content-box">
             <div class="content-title">
-              <div class="avatar">
+              <div class="avatar" @click="userDetail(v.user_id)">
                 <img :src="v.headimgurl" alt="">
                 <p>{{v.nickname}}</p>
               </div>
@@ -79,6 +79,14 @@ export default {
     },
     handleUpvote(id) {
       this.$store.dispatch('upvote', { id, type: this.options.type });
+    },
+    userDetail(id) {
+      this.$router.push({
+        name: 'User-detail',
+        params: {
+          id,
+        },
+      });
     },
   },
 };

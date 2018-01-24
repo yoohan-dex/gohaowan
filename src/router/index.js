@@ -17,9 +17,11 @@ import Following from '../views/following';
 import Ticket from '../views/ticket';
 import Profile from '../views/User-profile';
 import MyActivity from '../views/my-activity';
+import MyComments from '../views/my-comments';
 import Joined from '../views/joined-list';
 import TicketDetail from '../views/ticket-detail';
 import MgrLogin from '../views/mgr-login';
+import Agreement from '../views/agreement';
 
 Vue.use(Router);
 
@@ -106,7 +108,21 @@ const router = new Router({
       name: 'My-activity',
       component: MyActivity,
     },
-    { path: '/mgr-login', name: 'Mgr-login', component: MgrLogin },
+    {
+      path: '/my-comments',
+      name: 'My-comments',
+      component: MyComments,
+    },
+    {
+      path: '/agreement',
+      name: 'Agreement',
+      component: Agreement,
+    },
+    {
+      path: '/mgr-login',
+      name: 'Mgr-login',
+      component: MgrLogin,
+    },
   ],
   mode: 'history',
   base: '/front/',

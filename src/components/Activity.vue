@@ -24,7 +24,7 @@
             <img class="icon" src="../assets/location.svg" alt="">
             {{item.address}}
           </div>
-          <div class="price">
+          <div class="price" v-show="item.can_join_online">
             {{item.join_fee}}元/位
           </div>
         </div>

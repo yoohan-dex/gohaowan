@@ -13,7 +13,7 @@
     </div>
     <div class="content" v-if="ini">
       <div class="search-block" v-if="history.length > 0">
-        <div class="type" >
+        <div class="type">
           历史搜索
         </div>
         <div class="bubble-block">
@@ -64,6 +64,7 @@ export default {
       ini: true,
     };
   },
+
   computed: {
     ...mapState({
       list: state =>
@@ -197,6 +198,9 @@ li {
 }
 a {
   color: white;
+}
+.alert {
+  text-align: center;
 }
 </style>
 

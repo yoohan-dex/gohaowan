@@ -6,8 +6,8 @@ const informationModule = {
     page: 1,
     list: [],
     activeId: '',
-    active: {},
-    top: {},
+    active: '',
+    top: '',
   },
   mutations: {
     infoPageIncrement(state, list) {

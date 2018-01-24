@@ -8,8 +8,8 @@
         <p class="time">{{item.add_time}}</p>
       </div>
     </div>
-    <detail-content :data="item" :member="false"></detail-content>
-    <comment :item="item" :list="comments" :loadMore="loadMore" :reload="reload" :options="options" :handleComment="handleComment"></comment>
+    <detail-content v-if="ready" :data="item" :member="false"></detail-content>
+    <comment v-if="ready" :item="item" :list="comments" :loadMore="loadMore" :reload="reload" :options="options" :handleComment="handleComment"></comment>
     <!-- <div class="bottom-btn">
       <div class="price">
         {{item.join_fee}}/人
@@ -49,11 +49,17 @@ export default {
       item: state => state.information.active,
       comments: state => state.comments.list.information,
     }),
+    ready() {
+      return this.item;
+    },
   },
   created() {
     const id = this.$route.params.id;
     this.id = id;
     this.$store.dispatch('getInformationDetail', { id });
+  },
+  updated() {
+    console.log(this.ready);
   },
   mounted() {
     this.loadMore();
@@ -86,7 +92,7 @@ export default {
     },
     handleComment() {
       this.commenting = true;
-      setTimeout(() => this.$refs.comment.focus(), 200);
+      // setTimeout(() => this.$refs.comment.focus(), 200);
     },
     finishComment() {
       this.commenting = false;

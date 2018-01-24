@@ -71,7 +71,7 @@
           <img src="../assets/join.png" alt="">
           参与过的
         </div>
-        <div class="item">
+        <div class="item" @click="to('My-comments')">
           <img src="../assets/comm.png" alt="">
           我评论的
         </div>

@@ -15,12 +15,18 @@
       </div>
     </div>
   </div>
-  <mt-checklist
-    v-model="read"
-    :options="['请阅读并同意《活动协议》']">
-  </mt-checklist>
+  
   <div class="total">
     合计: <span>{{item.join_fee}}元</span>
+  </div>
+  <div class="check-agreement">
+    <span class="check-box">
+      <input type="checkbox" class="mint-checkbox-input" v-model="read">
+      <span class="mint-checkbox-core" @click="handleRead"></span>
+    </span>
+    <span class="mint-checkbox-label">
+      请阅读并同意<span class="light" @click="to('Agreement')">《活动协议》</span>
+    </span>
   </div>
   <button @click="handleAction">
     提交
@@ -33,7 +39,7 @@ import { mapState } from 'vuex';
 export default {
   data() {
     return {
-      read: [],
+      read: false,
     };
   },
   name: 'confirm-item',
@@ -45,6 +51,12 @@ export default {
   methods: {
     handleAction() {
       this.$store.dispatch('action', { router: this.$router });
+    },
+    handleRead() {
+      this.read = !this.read;
+    },
+    to(name) {
+      this.$router.push({ name });
     },
   },
 };
@@ -87,12 +99,12 @@ export default {
 }
 button {
   width: 80%;
-  margin: 50px 10%;
   background: #fdda06;
   padding: 15px;
   border: 0;
   border-radius: 5px;
   outline: none;
+  margin: 0 10%;
 }
 .total {
   color: #666666;
@@ -103,6 +115,13 @@ button {
     font-size: 24px;
     color: #d4504b;
   }
+}
+.check-agreement {
+  text-align: center;
+  margin: 50px 0 10px;
+}
+.light {
+  text-decoration: underline;
 }
 </style>
 

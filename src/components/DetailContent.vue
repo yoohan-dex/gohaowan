@@ -234,7 +234,7 @@ export default {
 
   span {
     text-decoration: underline;
-    color: #8282f2;
+    color: #639ae7;
     margin-right: 20px;
   }
 }
