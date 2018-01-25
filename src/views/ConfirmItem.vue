@@ -35,11 +35,12 @@
 </template>
 <script>
 import { mapState } from 'vuex';
+import { MessageBox } from 'mint-ui';
 
 export default {
   data() {
     return {
-      read: false,
+      read: true,
     };
   },
   name: 'confirm-item',
@@ -50,7 +51,11 @@ export default {
   },
   methods: {
     handleAction() {
-      this.$store.dispatch('action', { router: this.$router });
+      if (this.read) {
+        this.$store.dispatch('action', { router: this.$router });
+      } else {
+        MessageBox.alert('需要同意活动协议才可报名');
+      }
     },
     handleRead() {
       this.read = !this.read;

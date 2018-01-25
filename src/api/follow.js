@@ -50,10 +50,32 @@ const unfollow = (id, type) => {
   });
 };
 
+const fans = id => page =>
+  request({
+    url: '/app/follow/fans-list',
+    method: 'get',
+    params: {
+      user_id: id,
+      page,
+    },
+  });
+
+const follower = id => page =>
+  request({
+    url: '/app/follow/user-list',
+    method: 'get',
+    params: {
+      user_id: id,
+      page,
+    },
+  });
+
 export default {
   activity: getActivityList,
   store: getStoreList,
   user: getUserList,
   follow,
   unfollow,
+  fans,
+  follower,
 };

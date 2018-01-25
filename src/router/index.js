@@ -23,6 +23,9 @@ import TicketDetail from '../views/ticket-detail';
 import MgrLogin from '../views/mgr-login';
 import Agreement from '../views/agreement';
 
+import Follower from '../views/follower-list';
+import Fans from '../views/fans-list';
+
 Vue.use(Router);
 
 const router = new Router({
@@ -122,6 +125,16 @@ const router = new Router({
       path: '/mgr-login',
       name: 'Mgr-login',
       component: MgrLogin,
+    },
+    {
+      path: '/follower/:id',
+      name: 'Follower-list',
+      component: Follower,
+    },
+    {
+      path: '/fans/:id',
+      name: 'Fans-list',
+      component: Fans,
     },
   ],
   mode: 'history',

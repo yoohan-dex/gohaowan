@@ -80,7 +80,7 @@
           我关注的
         </div>
       </div>
-      <p class="mgr" @click="to('Mgr-login')">活动管理</p>
+      <!-- <p class="mgr" @click="to('Mgr-login')">活动管理</p> -->
     </div>
   </div>
 

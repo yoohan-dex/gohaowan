@@ -115,6 +115,16 @@ const getOtherList = id => page =>
     },
   });
 
+const getMoment = id => page =>
+  request({
+    url: '/app/user/dynamic',
+    method: 'get',
+    params: {
+      user_id: id,
+      page,
+    },
+  });
+
 const getOrderDetail = id =>
   request({
     url: '/app/order/order-info',
@@ -123,6 +133,7 @@ const getOrderDetail = id =>
       id,
     },
   });
+
 export default {
   getActivityDetail,
   getActivityList,
@@ -138,4 +149,5 @@ export default {
   getOrder,
   getOrderDetail,
   getOtherList,
+  getMoment,
 };
