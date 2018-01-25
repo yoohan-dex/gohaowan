@@ -61,7 +61,7 @@ export default {
     this.$store.dispatch('getInformationDetail', { id });
   },
   updated() {
-    console.log(this.ready);
+    this.handleShare();
   },
   mounted() {
     this.loadMore();

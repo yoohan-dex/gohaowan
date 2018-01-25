@@ -58,7 +58,7 @@ export default {
     wx.ready(() => this.handleShare());
     // this.handleShare();
   },
-  update() {
+  updated() {
     this.handleShare();
   },
   components: { DetailTitle, DetailContent, Comment },
