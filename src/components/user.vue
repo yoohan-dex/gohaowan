@@ -19,7 +19,7 @@ export default {
       this.$router.push({
         name: 'User-detail',
         params: {
-          id: this.item.id,
+          id: this.item.target_user_id,
         },
       });
     },
