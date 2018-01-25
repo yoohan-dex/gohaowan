@@ -39,11 +39,12 @@ const globalModule = {
       if (res.code === 10030) {
         location.assign('http://ghw.work2pix.top/app/login/wx-code');
       } else if (res.code === 10031) {
-        const res2 = await api.getInfo();
-        commit('setUser', res2.data);
+        // commit('setUser', res2.data);
+        // const res2 = await api.getInfo();
         $router.replace({ name: 'Bind-phone' });
       } else {
         commit('setUser', res.data);
+        $router.replace({ name: 'Index' });
       }
     },
     // async getValid({state}) {

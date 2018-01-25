@@ -48,8 +48,12 @@ export default {
         tags: this.selected,
       });
       if (res.code === 0) {
-        this.$router.replace({ name: 'Index' });
+        this.login();
       }
+    },
+    async login() {
+      const $router = this.$router;
+      this.$store.dispatch('getUserInfo', $router);
     },
     handleSelect(i) {
       if (this.selected.length < 5) {
