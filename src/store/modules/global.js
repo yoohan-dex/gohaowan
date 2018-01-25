@@ -37,7 +37,11 @@ const globalModule = {
     async getUserInfo({ commit }, $router) {
       const res = await api.getInfo();
       if (res.code === 10030) {
-        location.assign(`${process.env.BASE_API}/app/login/wx-code`);
+        location.assign(
+          `${
+            process.env.BASE_API ? process.env.BASE_API : ''
+          }/app/login/wx-code`,
+        );
       } else if (res.code === 10031) {
         // commit('setUser', res2.data);
         // const res2 = await api.getInfo();
