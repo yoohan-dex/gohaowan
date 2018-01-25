@@ -26,6 +26,8 @@
 </template>
 <script>
 import { mapState } from 'vuex';
+import wx from 'weixin-js-sdk';
+
 import DetailTitle from '../components/DetailTitle';
 import DetailContent from '../components/DetailContent';
 import Comment from '../components/Comment';
@@ -63,6 +65,7 @@ export default {
   },
   mounted() {
     this.loadMore();
+    wx.ready(() => this.handleShare());
   },
   destroyed() {
     this.$store.commit('resetActiveId');
@@ -101,6 +104,19 @@ export default {
       await CommentApi.comment(this.type)(this.id)(this.commentValue);
       this.commenting = false;
       this.reload();
+    },
+    handleShare() {
+      wx.onMenuShareTimeline({
+        title: this.item.title, // 分享标题
+        link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'http://ghw.work2pix.top' + this.item.cover_image, // 分享图标
+      });
+      wx.onMenuShareAppMessage({
+        title: this.item.title, // 分享标题
+        link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'http://ghw.work2pix.top' + this.item.cover_image, //
+        desc: '', // 分享描述
+      });
     },
   },
 };
