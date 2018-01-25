@@ -1,8 +1,12 @@
 import wx from 'weixin-js-sdk';
 import api from '../api/wx';
 
-const jsApiList = ['chooseWXPay'];
-const debug = false;
+const jsApiList = [
+  'chooseWXPay',
+  'onMenuShareTimeline',
+  'onMenuShareAppMessage',
+];
+const debug = true;
 export default async () => {
   const res = await api.getConfig();
   if (res.code === 0) {

@@ -14,6 +14,7 @@
 
     <div class="tab">
       <div class="tab-container" v-if="nav === 'user'" :style="{display: nav === 'user' ? 'block' : 'none'}">
+        <p v-show="list.user.length < 1">还没有关注的用户</p>
         <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
           <li v-for="(item, i) in list.user" :key="i">
             <user-item :item="item">
