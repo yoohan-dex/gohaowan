@@ -59,7 +59,7 @@ const uploadImage = id =>
     url: 'app/wx/get-image',
     method: 'get',
     params: {
-      id,
+      serverId: id,
     },
   });
 
