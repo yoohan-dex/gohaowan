@@ -16,7 +16,9 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "imagesloaded": "^4.1.4",
     "initialize-css": "^1.4.0",
+    "masonry-layout": "^4.2.1",
     "mint-ui": "^2.2.13",
     "moment": "^2.20.1",
     "sanitize.css": "^5.0.0",

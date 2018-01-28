@@ -53,11 +53,13 @@ export default {
     },
     async login() {
       const $router = this.$router;
-      this.$store.dispatch('getUserInfo', $router);
+      this.$store.dispatch('getUserInfo', { $router, goIndex: true });
     },
     handleSelect(i) {
       if (this.selected.length < 5) {
         this.tags[i].selected = !this.tags[i].selected;
+      } else if (this.tags[i].selected) {
+        this.tags[i].selected = false;
       }
     },
   },
@@ -87,7 +89,7 @@ export default {
     width: 100%;
   }
   .next {
-    width: 250px;
+    width: 80%;
     background: #fdda06;
     border: 0;
     border: 10px;

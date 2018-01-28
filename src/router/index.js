@@ -26,6 +26,10 @@ import Agreement from '../views/agreement';
 import Follower from '../views/follower-list';
 import Fans from '../views/fans-list';
 
+import Tobehot from '../views/tobehot';
+import SubmitSuccess from '../views/submit-success';
+import Moment from '../views/moment';
+
 Vue.use(Router);
 
 const router = new Router({
@@ -135,6 +139,21 @@ const router = new Router({
       path: '/fans/:id',
       name: 'Fans-list',
       component: Fans,
+    },
+    {
+      path: '/tobehot',
+      name: 'Tobehot',
+      component: Tobehot,
+    },
+    {
+      path: '/Submit-success',
+      name: 'Submit-success',
+      component: SubmitSuccess,
+    },
+    {
+      path: '/moment',
+      name: 'Moment',
+      component: Moment,
     },
   ],
   mode: 'history',

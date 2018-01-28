@@ -48,7 +48,9 @@ const globalModule = {
         $router.replace({ name: 'Bind-phone' });
       } else {
         commit('setUser', res.data);
-        $router.replace({ name: 'Index' });
+        if ($router.goIndex) {
+          $router.$router.replace({ name: 'Index' });
+        }
       }
     },
     // async getValid({state}) {

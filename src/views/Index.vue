@@ -4,6 +4,9 @@
     <img :src="user.headimgurl" alt="" @click="handleOpen">
   </div>
   <div class="nav-bar">
+    <div :class="[{ active: nav === 2 }, 'item']" @click="handleNavSelected(2)">
+      <p>红人</p>
+    </div>
     <div :class="[{ active: nav === 0 }, 'item']" @click="handleNavSelected(0)">
       <p>活动</p>
     </div>
@@ -13,7 +16,7 @@
   </div>
   
   <div class="tab">
-    <div class="tab-container" v-if="nav === 0" :style="{display: nav === 0 ? 'block' : 'none'}">
+    <div class="tab-container" v-if="nav === 0" key="activity">
 
       <div class="search-bar">
         <div class="search-area" @click="handleSearch">
@@ -29,7 +32,10 @@
       </ul>
 
     </div>
-    <div class="tab-container" v-else>
+
+
+
+    <div class="tab-container" v-else-if="nav === 1" key="discover">
 
       <div class="information-container" @click="toInfoDetail">
         <div class="top" :style="{height}">
@@ -50,6 +56,20 @@
 
   </div>  
 
+  <div class="tab-container" v-else-if="nav === 2" key="people">
+
+      <div class="search-bar">
+        <div class="search-area" @click="handleSearch">
+          <img class="icon" src="../assets/search.svg" alt="">
+          <p>搜索红人</p>
+        </div>
+      </div>
+      <people-list></people-list>
+      <div class="camera-button" @click="to('Moment')">
+        <img src="../assets/camera.svg" alt="">
+      </div>
+    </div>
+
     </div>
     <div :class="['sidebar-shadow', {'sidebar-shadow-show': open}]" @click="handleOpen"></div>
     <div :class="['sidebar', {'sidebar-show': open}]">
@@ -68,20 +88,30 @@
           我的订单
         </div>
         <div class="item" @click="to('My-activity')">
-          <img src="../assets/join.png" alt="">
+          <img src="../assets/join.png" alt="" style="width: 27px">
           参与过的
         </div>
         <div class="item" @click="to('My-comments')">
           <img src="../assets/comm.png" alt="">
           我评论的
         </div>
-        <div class="item item-last" @click="to('Follow')">
-          <img src="../assets/heart.png" alt="">
+        <div class="item " @click="to('Follow')">
+          <img src="../assets/heart.png" alt="" style="width: 26px;">
           我关注的
+        </div>
+        <div class="item item-last" @click="to('Tobehot')">
+          <img src="../assets/fire.png" alt="">
+          成为红人
         </div>
       </div>
       <!-- <p class="mgr" @click="to('Mgr-login')">活动管理</p> -->
     </div>
+    <!-- <mt-actionsheet
+      :actions="actions"
+      v-model="sheetVisible"
+     >
+
+    </mt-actionsheet> -->
   </div>
 
   
@@ -91,6 +121,8 @@
 import { mapState } from 'vuex';
 import Activity from '../components/Activity';
 import Information from '../components/Information';
+import PeopleList from '../components/People-list';
+// import { Actionsheet } from 'mint-ui';
 
 import './index.scss';
 
@@ -103,12 +135,16 @@ import './index.scss';
 // };
 export default {
   name: 'HelloWorld',
-  components: { Activity, Information },
+  components: { Activity, Information, PeopleList },
   data() {
     return {
       loading: false,
       height: 0,
       open: false,
+      // actions: [{
+      //   name: '上传视频',
+
+      // }]
     };
   },
   created() {
@@ -199,7 +235,7 @@ export default {
   background: #333333;
   width: 100%;
   height: 44px;
-  padding: 0 100px;
+  padding: 0 20%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -295,6 +331,18 @@ export default {
       .sub-title {
       }
     }
+  }
+}
+
+.camera-button {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  width: 45px;
+  height: 45px;
+
+  img {
+    width: 100%;
   }
 }
 
@@ -402,6 +450,9 @@ a {
   }
   .item-last {
     border-bottom: 0;
+    img {
+      width: 23px;
+    }
   }
 }
 .mgr {

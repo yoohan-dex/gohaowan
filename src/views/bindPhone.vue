@@ -108,7 +108,7 @@ export default {
   }
 
   .next {
-    width: 250px;
+    width: 80%;
     background: #fdda06;
     border: 0;
     border: 10px;

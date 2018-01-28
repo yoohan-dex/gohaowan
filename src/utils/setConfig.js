@@ -5,6 +5,10 @@ const jsApiList = [
   'chooseWXPay',
   'onMenuShareTimeline',
   'onMenuShareAppMessage',
+  'chooseImage',
+  'previewImage',
+  'uploadImage',
+  'getLocation',
 ];
 const debug = false;
 export default async () => {
