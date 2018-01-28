@@ -56,7 +56,7 @@ function getConfig() {
 
 const uploadImage = id =>
   request({
-    url: 'app/wx/get-image',
+    url: '/app/wx/get-image',
     method: 'get',
     params: {
       serverId: id,
