@@ -53,6 +53,16 @@ function getConfig() {
     method: 'get',
   });
 }
+
+const uploadImage = id =>
+  request({
+    url: 'app/wx/get-image',
+    method: 'get',
+    params: {
+      id,
+    },
+  });
+
 export default {
   getInfo,
   getTag,
@@ -61,4 +71,5 @@ export default {
   updateInfo,
   bindPhone,
   getConfig,
+  uploadImage,
 };
