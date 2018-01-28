@@ -64,8 +64,8 @@
           <p>搜索红人</p>
         </div>
       </div>
-      <people-list></people-list>
-      <div class="camera-button" @click="to('Moment')">
+      <people-list :list="hot" :loadMore="hotLoadMore"></people-list>
+      <div class="camera-button" v-show="user.is_hot" @click="to('Moment')">
         <img src="../assets/camera.svg" alt="">
       </div>
     </div>
@@ -95,11 +95,11 @@
           <img src="../assets/comm.png" alt="">
           我评论的
         </div>
-        <div class="item " @click="to('Follow')">
+        <div :class="['item', {'item-last': user.is_hot} ]" @click="to('Follow')">
           <img src="../assets/heart.png" alt="" style="width: 26px;">
           我关注的
         </div>
-        <div class="item item-last" @click="to('Tobehot')">
+        <div class="item item-last" v-show="!user.is_hot" @click="to('Tobehot')">
           <img src="../assets/fire.png" alt="">
           成为红人
         </div>
@@ -154,6 +154,7 @@ export default {
   },
   computed: {
     ...mapState({
+      hot: state => state.hot.list,
       list: state => state.activity.list,
       scroll: state => state.activity.scroll,
       infoList: state => state.information.list,
@@ -219,6 +220,9 @@ export default {
       //   this.list.push(item);
       //   this.loading = false;
       // }, 1000);
+    },
+    hotLoadMore() {
+      this.$store.dispatch('getHotList');
     },
     to(name) {
       this.$router.push({ name });
