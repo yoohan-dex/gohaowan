@@ -37,7 +37,7 @@
       
     </div>
     <div class="tags">
-      <span v-for="(item , i) in data.tag_list" :key="i">#{{item.name}}</span>
+      <span v-for="(item , i) in data.tag_list" :key="i" @click="handleTag(item.id)">#{{item.name}}</span>
     </div>
     </div>
   </div>
@@ -101,6 +101,12 @@ export default {
         params: {
           id,
         },
+      });
+    },
+    handleTag(id) {
+      this.$router.push({
+        name: 'Tag-activity',
+        params: { id },
       });
     },
   },

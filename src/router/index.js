@@ -22,6 +22,7 @@ import Joined from '../views/joined-list';
 import TicketDetail from '../views/ticket-detail';
 import MgrLogin from '../views/mgr-login';
 import Agreement from '../views/agreement';
+import TagActivity from '../views/tag-activity';
 
 import Follower from '../views/follower-list';
 import Fans from '../views/fans-list';
@@ -160,6 +161,11 @@ const router = new Router({
       path: '/hot-detail/:id',
       name: 'Hot-detail',
       component: HotDetail,
+    },
+    {
+      path: '/tag-activity/:id',
+      name: 'Tag-activity',
+      component: TagActivity,
     },
   ],
   mode: 'history',

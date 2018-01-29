@@ -100,7 +100,7 @@ export default {
     },
     cancel() {
       this.$store.commit('resetSearch');
-      this.$router.back();
+      this.ini = true;
     },
     handleChange(e) {
       this.$store.commit('setKeyword', e.target.value);

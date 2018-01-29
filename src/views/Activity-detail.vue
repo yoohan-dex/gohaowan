@@ -106,6 +106,7 @@ export default {
       this.commenting = false;
       this.reload();
     },
+
     handleShare() {
       wx.onMenuShareTimeline({
         title: this.item.title, // 分享标题
