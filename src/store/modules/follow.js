@@ -77,7 +77,6 @@ const activityModule = {
       const res = await api.unfollow(id, type);
       if (res.code === 0) {
         commit(unfollowType[type], id);
-        console.log(unfollowType[type]);
         if (cb) {
           cb();
         }

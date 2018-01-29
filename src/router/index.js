@@ -29,6 +29,7 @@ import Fans from '../views/fans-list';
 import Tobehot from '../views/tobehot';
 import SubmitSuccess from '../views/submit-success';
 import Moment from '../views/moment';
+import HotDetail from '../views/hot-detail';
 
 Vue.use(Router);
 
@@ -154,6 +155,11 @@ const router = new Router({
       path: '/moment',
       name: 'Moment',
       component: Moment,
+    },
+    {
+      path: '/hot-detail/:id',
+      name: 'Hot-detail',
+      component: HotDetail,
     },
   ],
   mode: 'history',

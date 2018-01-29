@@ -1,6 +1,6 @@
 <template>
-  <div class="inner-container">
-    <div class="top">
+  <div class="inner-container" :style="{backgroundColor: options.type === 'moment' ? '#f2f2f2' : ''}">
+    <div class="top" v-show="options.type !== 'moment'">
       <p class="title">玩家评论</p>
       <p @click="handleClick">
         <img src="../assets/comments.svg" alt="">
@@ -9,7 +9,7 @@
     </div>
     <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
       <li  v-for="(v, i) in list" :key="i">
-        <div class="item">
+        <div class="item" :style="{padding: options.type === 'moment' ? '0 0 5px 0' : '', borderBottom: options.type === 'moment' ? '1px solid #ddd' : ''}">
           <div class="content-box">
             <div class="content-title">
               <div class="avatar" @click="userDetail(v.user_id)">

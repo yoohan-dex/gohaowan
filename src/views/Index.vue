@@ -95,13 +95,17 @@
           <img src="../assets/comm.png" alt="">
           我评论的
         </div>
-        <div :class="['item', {'item-last': user.is_hot} ]" @click="to('Follow')">
+        <div class="item" @click="to('Follow')">
           <img src="../assets/heart.png" alt="" style="width: 26px;">
           我关注的
         </div>
         <div class="item item-last" v-show="!user.is_hot" @click="to('Tobehot')">
           <img src="../assets/fire.png" alt="">
           成为红人
+        </div>
+        <div class="item item-last" v-show="user.is_hot" @click="to('myMoments')">
+          <img src="../assets/fire.png" alt="">
+          我发布的
         </div>
       </div>
       <!-- <p class="mgr" @click="to('Mgr-login')">活动管理</p> -->

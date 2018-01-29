@@ -79,9 +79,9 @@ const activityModule = {
     },
     setActivityUnfollow(state, id) {
       state.list.forEach((v) => {
-        if (v.id === id) {
-          v.is_follow = false;
+        if (v.id === id && v.is_follow) {
           v.follow_count -= 1;
+          v.is_follow = false;
         }
       });
       if (state.active.id === id) {
