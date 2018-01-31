@@ -243,7 +243,7 @@ export default {
   background: #333333;
   width: 100%;
   height: 44px;
-  padding: 0 20%;
+  padding: 0 25%;
   display: flex;
   justify-content: space-between;
   align-items: center;

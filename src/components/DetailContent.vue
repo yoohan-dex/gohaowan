@@ -19,7 +19,7 @@
     <div class="store-activity" v-show="options.type === 'store'">
       <div class="title">
         <div class="left">相关活动</div>
-        <div class="right">更多<img class="member-arrow" src="../assets/arrow2.svg" alt=""></div>
+        <!-- <div class="right">更多<img class="member-arrow" src="../assets/arrow2.svg" alt=""></div> -->
       </div>
       <div class="activity-wrap">
         <div class="activity" v-if="activityList" v-for="(item, i) in activityList" :key="i" @click="handleDetail(item.id)">
@@ -162,7 +162,7 @@ export default {
   .title {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
     align-items: center;
     .member-arrow {
       width: 15px;
