@@ -73,10 +73,16 @@ export default {
     this.length = this.data.join_list.length;
     this.limit = this.data.join_limit_number;
   },
-  mounted() {},
+  mounted() {
+    this.activityList = this.data.activity_list.map(v => ({
+      ...v,
+      time: moment(v.start_time * 1000).format('YYYY-MM-DD'),
+    }));
+  },
   watch: {
-    data(val, old) {
-      if (val.activity_list !== old.activity_list) {
+    data(val) {
+      console.log('newData', val);
+      if (val.activity_list !== this.activity_list) {
         this.activityList = val.activity_list.map(v => ({
           ...v,
           time: moment(v.start_time * 1000).format('YYYY-MM-DD'),

@@ -4,9 +4,9 @@
     <img :src="user.headimgurl" alt="" @click="handleOpen">
   </div>
   <div class="nav-bar">
-    <div :class="[{ active: nav === 2 }, 'item']" @click="handleNavSelected(2)">
+    <!-- <div :class="[{ active: nav === 2 }, 'item']" @click="handleNavSelected(2)">
       <p>红人</p>
-    </div>
+    </div> -->
     <div :class="[{ active: nav === 0 }, 'item']" @click="handleNavSelected(0)">
       <p>活动</p>
     </div>
@@ -95,18 +95,18 @@
           <img src="../assets/comm.png" alt="">
           我评论的
         </div>
-        <div class="item" @click="to('Follow')">
+        <div class="item item-last" @click="to('Follow')">
           <img src="../assets/heart.png" alt="" style="width: 26px;">
           我关注的
         </div>
-        <div class="item item-last" v-show="!user.is_hot" @click="to('Tobehot')">
+        <!-- <div class="item item-last" v-show="!user.is_hot" @click="to('Tobehot')">
           <img src="../assets/fire.png" alt="">
           成为红人
         </div>
         <div class="item item-last" v-show="user.is_hot" @click="to('myMoments')">
           <img src="../assets/fire.png" alt="">
           我发布的
-        </div>
+        </div> -->
       </div>
       <!-- <p class="mgr" @click="to('Mgr-login')">活动管理</p> -->
     </div>
