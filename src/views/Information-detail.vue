@@ -18,9 +18,16 @@
         立即报名
       </router-link>
     </div>   -->
-    <div class="comment-input" v-show="commenting">
-      <input @blur="finishComment" ref="comment" type="text" v-model="commentValue">
-      <button @click="handleCommentSubmit" >发送</button>
+    <div :class="['sidebar-shadow', {'sidebar-shadow-show': commenting}]"></div>
+    <div class="comment-layer" v-show="commenting">
+      <div class="comment-input-box">
+        <div class="title">写评论</div>
+        <input type="text" v-model="commentValue">
+        <div class="footer">
+          <div class="cancel" @click="finishComment">取消</div>
+          <div class="confirm" @click="handleCommentSubmit">确定</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -113,9 +120,9 @@ export default {
       });
       wx.onMenuShareAppMessage({
         title: this.item.title, // 分享标题
+        desc: this.item.share_text,
         link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         imgUrl: 'http://ghw.work2pix.top' + this.item.cover_image, //
-        desc: '', // 分享描述
       });
     },
   },

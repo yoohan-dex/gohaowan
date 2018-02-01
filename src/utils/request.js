@@ -38,7 +38,7 @@ service.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    MessageBox.alert(error.message, '请求错误');
+    MessageBox.alert('请求繁忙，请稍后重试', '请求错误');
     return Promise.reject(error);
   },
 );

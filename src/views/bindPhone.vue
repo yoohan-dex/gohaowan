@@ -5,7 +5,7 @@
   <input type="number" class="phone" placeholder="输入您的手机号码" v-model="phone">
   <div class="options">
     <input type="number" class="valid" v-model="valid">
-    <button class="send" @click="sendSms">{{text}}</button>
+    <button class="send" :style="{backgroundColor: !sending && ready? '#fdda06' : ''}" @click="sendSms">{{text}}</button>
   </div>
   <button class="next" :disabled="disabled" @click="handleSubmit">下一步</button>
 </div>
@@ -21,6 +21,8 @@ export default {
       count: 60,
       text: '发送验证码',
       valid: '',
+      sending: false,
+      ready: false,
     };
   },
   computed: {
@@ -33,6 +35,15 @@ export default {
       this.$router.replace({ name: 'User-infomation' });
     }
   },
+  watch: {
+    phone(val) {
+      if (val.length === 11) {
+        this.ready = true;
+      } else {
+        this.ready = false;
+      }
+    },
+  },
   methods: {
     async sendSms() {
       if (this.phone.length === 11) {
@@ -41,10 +52,12 @@ export default {
           if (this.count > 0) {
             this.count = this.count - 1;
             this.text = `已发送 ${this.count}s`;
+            this.sending = true;
           } else {
             clearInterval(this.timer);
             this.count = 60;
             this.text = '发送验证码';
+            this.sending = false;
           }
         }, 1000);
       } else {

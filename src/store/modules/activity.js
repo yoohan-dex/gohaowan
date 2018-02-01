@@ -147,7 +147,6 @@ const activityModule = {
         if (res.data.need_pay) {
           const response = await api.pay(res.data.id);
           if (response.code === 0) {
-            console.log(response);
             const { timeStamp, nonceStr, signType, paySign } = response.data;
             wx.chooseWXPay({
               debug: true,
@@ -157,8 +156,13 @@ const activityModule = {
               paySign,
               package: response.data.package,
               success() {
-                router.go(-3);
-                router.push('Ticket');
+                router.back();
+                router.back();
+                router.back();
+                router.push({
+                  name: 'Ticket-detail',
+                  params: { id: res.data.id },
+                });
               },
               fail(error) {
                 alert('支付失败', error);

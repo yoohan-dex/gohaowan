@@ -3,7 +3,7 @@
     <detail-title :item="item" :handleFollow="handleFollow"></detail-title>
     <detail-content :data="item"></detail-content>
     <comment :item="item" :list="comments" :loadMore="loadMore" :handleComment="handleComment"></comment>
-    <div v-show="item.can_join_online === 1 && !commenting">
+    <div v-show="item.can_join_online === 1">
       <div class="space"></div>
       <div class="bottom-btn">
         <div class="price">
@@ -14,11 +14,19 @@
         </router-link>
       </div>  
     </div>
-    <div class="comment-input" v-show="commenting">
-      <input @blur="finishComment" ref="comment" type="text" v-model="commentValue">
-      <button @click="handleCommentSubmit" >发送</button>
+    <div :class="['sidebar-shadow', {'sidebar-shadow-show': commenting}]"></div>
+    <div class="comment-layer" v-show="commenting">
+      <div class="comment-input-box">
+        <div class="title">写评论</div>
+        <input type="text" v-model="commentValue">
+        <div class="footer">
+          <div class="cancel" @click="finishComment">取消</div>
+          <div class="confirm" @click="handleCommentSubmit">确定</div>
+        </div>
+      </div>
     </div>
   </div>
+  
 </template>
 <script>
 import { mapState } from 'vuex';
@@ -103,10 +111,10 @@ export default {
     },
     async handleCommentSubmit() {
       await CommentApi.comment(this.type)(this.id)(this.commentValue);
+      this.commentValue = '';
       this.commenting = false;
       this.reload();
     },
-
     handleShare() {
       wx.onMenuShareTimeline({
         title: this.item.title, // 分享标题
