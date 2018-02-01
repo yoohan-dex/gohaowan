@@ -156,13 +156,13 @@ const activityModule = {
               paySign,
               package: response.data.package,
               success() {
-                router.back();
-                router.back();
-                router.back();
-                router.push({
-                  name: 'Ticket-detail',
-                  params: { id: res.data.id },
-                });
+                router.go(-3);
+                setTimeout(() => {
+                  router.push({
+                    name: 'Ticket-detail',
+                    params: { id: 33 },
+                  });
+                }, 20);
               },
               fail(error) {
                 alert('支付失败', error);

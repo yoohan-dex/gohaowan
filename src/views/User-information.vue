@@ -22,6 +22,8 @@
 </div>
 </template>
 <script>
+import { MessageBox } from 'mint-ui';
+
 import api from '../api/wx';
 
 export default {
@@ -46,12 +48,16 @@ export default {
       this.sex = sex;
     },
     async handleSubmit() {
-      const res = await api.updateInfo({
-        nickname: this.name,
-        sex: this.sex,
-      });
-      if (res.code === 0) {
-        this.$router.replace({ name: 'User-label' });
+      if (this.name.length < 3 || this.name.length > 20) {
+        MessageBox.alert('昵称长度需要为3-20');
+      } else {
+        const res = await api.updateInfo({
+          nickname: this.name,
+          sex: this.sex,
+        });
+        if (res.code === 0) {
+          this.$router.replace({ name: 'User-label' });
+        }
       }
     },
   },
