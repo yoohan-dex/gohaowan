@@ -160,7 +160,7 @@ const activityModule = {
                 setTimeout(() => {
                   router.push({
                     name: 'Ticket-detail',
-                    params: { id: 33 },
+                    params: { id: res.data.id },
                   });
                 }, 20);
               },
