@@ -2160,6 +2160,10 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/ee-first/download/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
 
+ejs@0.7.1:
+  version "0.7.1"
+  resolved "http://registry.npm.taobao.org/ejs/download/ejs-0.7.1.tgz#6dab41cbdee572986db328a2a8d22040f20fba7c"
+
 ejs@2.5.7, ejs@^2.5.6:
   version "2.5.7"
   resolved "http://registry.npm.taobao.org/ejs/download/ejs-2.5.7.tgz#cc872c168880ae3c7189762fd5ffc00896c9518a"
@@ -3451,7 +3455,7 @@ ignore@^3.2.0, ignore@^3.3.5:
   version "3.3.7"
   resolved "http://registry.npm.taobao.org/ignore/download/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
-imagesloaded@^4.1.4:
+imagesloaded@^4.1.4, imagesloaded@latest:
   version "4.1.4"
   resolved "http://registry.npm.taobao.org/imagesloaded/download/imagesloaded-4.1.4.tgz#1376efcd162bb768c34c3727ac89cc04051f3cc7"
   dependencies:
@@ -4565,12 +4569,25 @@ map-obj@^1.0.0, map-obj@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/map-obj/download/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"
 
+masonry-layout@4.1.1:
+  version "4.1.1"
+  resolved "http://registry.npm.taobao.org/masonry-layout/download/masonry-layout-4.1.1.tgz#e8c8c6f5a9e621a75203ac4b7000855a36f6753e"
+  dependencies:
+    get-size "^2.0.2"
+    outlayer "^2.1.0"
+
 masonry-layout@^4.2.1:
   version "4.2.1"
   resolved "http://registry.npm.taobao.org/masonry-layout/download/masonry-layout-4.2.1.tgz#1c878b85a88866ba6b39b9bd0e162348aed7ce13"
   dependencies:
     get-size "^2.0.2"
     outlayer "^2.1.0"
+
+masonry@latest:
+  version "0.0.2"
+  resolved "http://registry.npm.taobao.org/masonry/download/masonry-0.0.2.tgz#c06a0b2efc043727eadd16b35fdae93a3908f432"
+  dependencies:
+    ejs "0.7.1"
 
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
@@ -7216,6 +7233,15 @@ vue-loader@^13.3.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
+vue-masonry@^0.10.16:
+  version "0.10.16"
+  resolved "http://registry.npm.taobao.org/vue-masonry/download/vue-masonry-0.10.16.tgz#b5e9c0d9964fc6b2a42d41a7ec284675edee2a28"
+  dependencies:
+    imagesloaded latest
+    masonry latest
+    masonry-layout "4.1.1"
+    vue "^2.0.0"
+
 vue-router@^3.0.1:
   version "3.0.1"
   resolved "http://registry.npm.taobao.org/vue-router/download/vue-router-3.0.1.tgz#d9b05ad9c7420ba0f626d6500d693e60092cc1e9"
@@ -7238,7 +7264,7 @@ vue-template-es2015-compiler@^1.5.3, vue-template-es2015-compiler@^1.6.0:
   version "1.6.0"
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
 
-vue@^2.5.2:
+vue@^2.0.0, vue@^2.5.2:
   version "2.5.13"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.5.13.tgz#95bd31e20efcf7a7f39239c9aa6787ce8cf578e1"
 
