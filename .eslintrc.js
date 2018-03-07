@@ -26,6 +26,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     // don't require .vue extension when importing
+    'arrow-parens': ['error', 'as-needed'],
     'import/extensions': [
       'error',
       'always',
@@ -41,6 +42,7 @@ module.exports = {
       {
         props: true,
         ignorePropertyModificationsFor: [
+          'v',
           'state', // for vuex state
           'acc', // for reduce accumulators
           'e', // for e.returnvalue
