@@ -3,6 +3,6 @@ const prodEnv = require('./prod.env');
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  BASE_API: '"http://ghw.work2pix.top"',
+  // BASE_API: '"http://ghw.work2pix.top"',
   IMAGE_PREFIX: '"http://ghw.work2pix.top"',
 });
