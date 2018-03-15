@@ -13,7 +13,7 @@ module.exports = {
   // required to lint *.vue files
   plugins: ['html'],
   globals: {
-    wx: true,
+    // wx: true,
   },
   // check if imports actually resolve
   settings: {
