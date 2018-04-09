@@ -1,0 +1,168 @@
+<template>
+  <div class="container" v-if="item.activity_list">
+    <detail-title :item="item" :options="options" :handleFollow="handleFollow"></detail-title>
+    <detail-content :data="item" :options="options"></detail-content>
+    <comment :item="item" :list="comments" :loadMore="loadMore" :reload="reload" :options="options" :handleComment="handleComment"></comment>
+
+    <!-- <div v-show="item.can_join_online === 1">
+      <div class="space"></div>
+      <div class="bottom-btn">
+        <div class="price">
+          {{item.join_fee}}/人
+        </div>
+        <router-link :to="{name: 'Activity-action'}" class="apply">
+          立即报名
+        </router-link>
+      </div>  
+    </div> -->
+    <div :class="['sidebar-shadow', {'sidebar-shadow-show': commenting}]"></div>
+    <div class="comment-layer" v-show="commenting">
+      <div class="comment-input-box">
+        <div class="title">写评论</div>
+        <input type="text" v-model="commentValue">
+        <div class="footer">
+          <div class="cancel" @click="finishComment">取消</div>
+          <div class="confirm" @click="handleCommentSubmit">确定</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import { mapState } from 'vuex';
+import wx from 'weixin-js-sdk';
+import DetailTitle from '../components/DetailTitle';
+import DetailContent from '../components/DetailContent';
+import Comment from '../components/Comment';
+import CommentApi from '../api/comments';
+
+export default {
+  name: 'store-detail',
+  data() {
+    return {
+      type: 'store',
+      page: 1,
+      commenting: false,
+      commentValue: '',
+      options: {
+        type: 'store',
+      },
+    };
+  },
+  destroyed() {
+    this.$store.commit('resetActiveId');
+  },
+  computed: {
+    ...mapState({
+      item: state => state.store.active,
+      comments: state => state.comments.list.store,
+    }),
+  },
+  created() {
+    const id = this.$route.params.id;
+    this.id = id;
+    this.$store.dispatch('getStoreDetail', { id });
+    this.$store.commit('setDetailType', 'store');
+
+    // this.$store.dispatch('getCommentsList');
+  },
+  mounted() {
+    this.loadMore();
+    wx.ready(() => this.handleShare());
+  },
+  updated() {
+    this.handleShare();
+  },
+  components: { DetailTitle, DetailContent, Comment },
+  methods: {
+    handleFollow(id, type, follow) {
+      if (follow) {
+        this.$store.dispatch('unfollow', { id, type });
+      } else {
+        this.$store.dispatch('follow', { id, type });
+      }
+    },
+    loadMore() {
+      const id = this.$route.params.id;
+
+      this.$store.dispatch('getCommentsList', {
+        type: this.type,
+        id,
+        page: this.page,
+      });
+      this.page += 1;
+    },
+    reload() {
+      const id = this.$route.params.id;
+      this.page = 1;
+
+      this.$store.dispatch('regetCommentsList', {
+        type: this.type,
+        id,
+        page: this.page,
+      });
+      this.page += 1;
+    },
+    handleComment() {
+      this.commenting = true;
+      // setTimeout(() => this.$refs.comment.focus(), 200);
+    },
+    finishComment() {
+      this.commenting = false;
+    },
+    async handleCommentSubmit() {
+      await CommentApi.comment(this.type)(this.id)(this.commentValue);
+      this.commenting = false;
+      this.reload();
+    },
+    handleShare() {
+      const { origin, pathname, hash } = location;
+      wx.onMenuShareTimeline({
+        title: this.item.store_name, // 分享标题
+        link: `${process.env.REDIRECT_PATH}${origin}${pathname}${hash}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: `${process.env.IMAGE_PREFIX}${this.item.cover_image}`, // 分享图标
+      });
+      wx.onMenuShareAppMessage({
+        title: this.item.store_name, // 分享标题
+        link: `${process.env.REDIRECT_PATH}${origin}${pathname}${hash}`, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: `${process.env.IMAGE_PREFIX}${this.item.cover_image}`, //
+        desc: '玩出新的生活方式', // 分享描述
+      });
+    },
+  },
+};
+</script>
+<style lang="scss" scoped>
+.container {
+  background: #f2f2f2;
+}
+.bottom-btn {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  justify-content: space-between;
+  background: #fdda06;
+  padding: 5px 0;
+  > * {
+    color: black;
+    text-decoration: none;
+    display: flex;
+    width: 50%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  .price {
+    border-right: 1px solid #bda306;
+    margin-left: 0.5px;
+  }
+}
+.space {
+  width: 100%;
+  height: 50px;
+}
+</style>
+
+
